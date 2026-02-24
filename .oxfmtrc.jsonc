@@ -1,0 +1,93 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+
+  // ========== 已使用的配置项 ==========
+
+  // 每行最大字符数，超出会换行。默认 100
+  "printWidth": 100,
+
+  // 缩进使用的空格数。默认 2
+  "tabWidth": 2,
+
+  // 是否使用 Tab 缩进（false 则用空格）。默认 false
+  "useTabs": false,
+
+  // 是否在语句末尾添加分号。默认 true，此处设为 false 与项目风格一致
+  "semi": false,
+
+  // 是否使用单引号。默认 false，此处设为 true
+  "singleQuote": true,
+
+  // 多行时是否添加尾随逗号。"all"=全部添加 | "es5"=ES5 兼容（对象/数组等）| "none"=不添加。默认 "all"
+  "trailingComma": "es5",
+
+  // 忽略的文件/目录，glob 模式相对于配置文件所在目录
+  "ignorePatterns": ["node_modules/**", "dist/**", "public/**", "pnpm-lock.yaml"],
+
+  // ========== 未使用的配置项（取消注释即可启用）==========
+
+  // 箭头函数单参数是否加括号。"always"=始终加 | "avoid"=能省则省。默认 "always"
+  "arrowParens": "avoid",
+
+  // 多行 HTML/JSX 元素的 > 是否放在最后一行的末尾。默认 false
+  // "bracketSameLine": false,
+
+  // 对象字面量花括号内是否加空格，如 { foo: 1 }。默认 true
+  // "bracketSpacing": true,
+
+  // 是否格式化嵌入代码（如 Vue 中的 CSS、CSS-in-JS）。"auto"=自动 | "off"=关闭。默认 "auto"
+  // "embeddedLanguageFormatting": "auto",
+
+  // 行尾符。"lf" | "crlf" | "cr"。默认 "lf"
+  // "endOfLine": "lf",
+
+  // HTML/Vue 等模板中的空白敏感度。"css"=按 CSS 规则 | "strict"=严格 | "ignore"=忽略。默认 "css"
+  // "htmlWhitespaceSensitivity": "css",
+
+  // 文件末尾是否插入换行符。默认 true
+  // "insertFinalNewline": true,
+
+  // JSX 中是否使用单引号。默认 false
+  // "jsxSingleQuote": false,
+
+  // 对象字面量换行方式。"preserve"=保持原有 | "collapse"=尽量单行。默认 "preserve"
+  // "objectWrap": "collapse",
+
+  // Markdown 段落换行。"preserve"=保持 | "always"=按 printWidth 换行 | "never"=不换行。默认 "preserve"
+  // "proseWrap": "preserve",
+
+  // 对象属性何时加引号。"as-needed"=按需 | "consistent"=一致 | "preserve"=保持。默认 "as-needed"
+  // "quoteProps": "as-needed",
+
+  // HTML/Vue/JSX 是否强制每行一个属性。默认 false
+  // "singleAttributePerLine": false,
+
+  // 是否排序 import 语句。internalPattern 识别 @/ 为内部模块
+  "sortImports": {
+    "groups": [
+      "builtin",
+      "external",
+      ["internal", "subpath"],
+      ["parent", "sibling", "index"],
+      "style",
+      "unknown",
+    ],
+    "internalPattern": ["@/", "~/"],
+    "newlinesBetween": true,
+    "order": "asc",
+  },
+
+  // 是否排序 package.json 的 key。默认 true
+  // "sortPackageJson": true,
+
+  // 是否排序 Tailwind CSS 类名。默认关闭，项目用 UnoCSS 可不启用
+  // "sortTailwindcss": false,
+
+  // 文件级覆盖，对特定文件应用不同配置
+  // "overrides": [
+  //   { "files": ["*.md"], "options": { "proseWrap": "always" } }
+  // ],
+
+  // Vue 文件中 <script> 和 <style> 内的代码是否缩进。默认 false
+  // "vueIndentScriptAndStyle": false
+}

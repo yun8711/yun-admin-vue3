@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": [
+    "node_modules/**",
+    "dist/**",
+    "**/*.config.ts",
+    "**/*.config.js",
+    "public/**",
+    "pnpm-lock.yaml"
+  ],
+  "categories": { "correctness": "deny", "suspicious": "warn" },
+  "rules": { "no-console": "warn", "no-debugger": "error" }
+}
