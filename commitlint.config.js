@@ -13,6 +13,8 @@ export default {
         'perf', // 性能优化
         'test', // 测试相关
         'chore', // 构建/工具变动
+        'build', // 构建系统
+        'ci', // CI 配置
         'revert', // 回滚
       ],
     ],

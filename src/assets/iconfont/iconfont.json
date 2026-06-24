@@ -1,0 +1,79 @@
+{
+  "id": "4414394",
+  "name": "sol-fe",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "36653318",
+      "name": "通知",
+      "font_class": "tongzhi1",
+      "unicode": "e714",
+      "unicode_decimal": 59156
+    },
+    {
+      "icon_id": "39094241",
+      "name": "通用配置",
+      "font_class": "tongyongpeizhi",
+      "unicode": "e72c",
+      "unicode_decimal": 59180
+    },
+    {
+      "icon_id": "39094242",
+      "name": "个人中心",
+      "font_class": "gerenzhongxin",
+      "unicode": "e730",
+      "unicode_decimal": 59184
+    },
+    {
+      "icon_id": "39094243",
+      "name": "审批中心",
+      "font_class": "shenpizhongxin",
+      "unicode": "e72e",
+      "unicode_decimal": 59182
+    },
+    {
+      "icon_id": "39094244",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e72f",
+      "unicode_decimal": 59183
+    },
+    {
+      "icon_id": "39094245",
+      "name": "头像",
+      "font_class": "touxiang1",
+      "unicode": "e72d",
+      "unicode_decimal": 59181
+    },
+    {
+      "icon_id": "36653399",
+      "name": "在线帮助文档",
+      "font_class": "zaixianbangzhuwendang",
+      "unicode": "e715",
+      "unicode_decimal": 59157
+    },
+    {
+      "icon_id": "31945750",
+      "name": "菜单",
+      "font_class": "caidan",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "29185730",
+      "name": "menu-fold",
+      "font_class": "menu-fold",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "29185731",
+      "name": "menu-unfold",
+      "font_class": "menu-unfold",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    }
+  ]
+}

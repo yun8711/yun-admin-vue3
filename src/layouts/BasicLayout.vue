@@ -44,9 +44,9 @@
 </template>
 
 <script setup lang="ts">
+import { House, ArrowDown } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { House, ArrowDown } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const activeMenu = computed(() => route.path)

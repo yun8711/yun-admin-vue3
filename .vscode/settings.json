@@ -2,6 +2,19 @@
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.rulers": [
+    100
+  ],
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "eslint.useFlatConfig": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.pnpm-store": true
+  },
   "[javascript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
@@ -17,6 +30,27 @@
   "[jsonc]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
-  "stylelint.validate": ["css", "scss", "vue"],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue"]
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "vue"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "pnpm-lock.yaml, .npmrc, .nvmrc, .node-version, commitlint.config.js",
+    "tsconfig.json": "tsconfig.*.json, tsconfig.tsbuildinfo",
+    "vite.config.ts": "vite.config.*, uno.config.ts, eslint.config.*, stylelint.config.*, .oxlintrc.json, .oxlintignore, .oxfmtrc.jsonc, .stylelintignore, .eslintrc-auto-import.json",
+    ".env.example": ".env, .env.*",
+    "README.md": "AGENTS.md, LICENSE*, CHANGELOG*",
+    "*.vue": "$(capture).spec.ts, $(capture).test.ts",
+    "*.ts": "$(capture).spec.ts, $(capture).test.ts, $(capture).d.ts"
+  }
 }

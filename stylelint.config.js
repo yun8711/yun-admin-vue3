@@ -5,7 +5,13 @@ export default {
     'stylelint-config-standard-vue/scss',
     'stylelint-config-clean-order',
   ],
-  ignoreFiles: ['node_modules/**', 'dist/**', 'public/**', '**/*.min.css'],
+  ignoreFiles: [
+    'node_modules/**',
+    'dist/**',
+    'public/**',
+    '**/*.min.css',
+    'src/assets/iconfont/iconfont.css',
+  ],
   rules: {
     'selector-class-pattern': null,
   },

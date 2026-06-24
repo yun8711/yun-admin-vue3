@@ -9,19 +9,23 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import { YunElpResolver } from 'yun-elp/resolver'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     vue(),
-    codeInspectorPlugin({ bundler: 'vite' }),
+    // codeInspectorPlugin只在开发环境
+    command === 'serve' ? codeInspectorPlugin({ bundler: 'vite' }) : null,
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia', '@vueuse/core'],
       resolvers: [ElementPlusResolver()],
-      dirs: ['src/composables', 'src/utils'],
+      dirs: ['src/composables'],
       dts: 'src/auto-imports.d.ts',
       eslintrc: { enabled: true },
     }),
     Components({
-      resolvers: [ElementPlusResolver(), YunElpResolver()],
+      resolvers: [
+        ElementPlusResolver({ importStyle: 'sass' }),
+        YunElpResolver({ importStyle: 'scss' }),
+      ],
       dirs: ['src/components'],
       dts: 'src/components.d.ts',
     }),
@@ -38,6 +42,38 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rolldownOptions: {
+      checks: {
+        invalidAnnotation: false,
+        pluginTimings: false,
+      },
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+
+          if (
+            id.includes('/vue/') ||
+            id.includes('/vue-router/') ||
+            id.includes('/pinia/') ||
+            id.includes('/@vueuse/')
+          )
+            return 'framework'
+
+          if (
+            id.includes('/element-plus/') ||
+            id.includes('/@element-plus/') ||
+            id.includes('/yun-elp/')
+          )
+            return 'ui'
+
+          if (id.includes('/axios/') || id.includes('/lodash-es/')) return 'utils'
+
+          return 'vendor'
+        },
+      },
+    },
+  },
   server: {
     port: 5173,
     proxy: {
@@ -47,4 +83,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

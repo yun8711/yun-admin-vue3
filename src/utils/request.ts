@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 import { ElMessage } from 'element-plus'
+import 'element-plus/es/components/message/style/css'
 
 const baseURL = import.meta.env.VITE_APP_BASE_API || '/api'
 

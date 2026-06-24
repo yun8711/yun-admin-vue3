@@ -48,8 +48,8 @@ export default tseslint.config(
       'vue/multi-word-component-names': ['error', { ignores: ['index', '404', 'default'] }],
       // 单行内容不强制换行（与 oxfmt 格式化风格兼容）
       'vue/singleline-html-element-content-newline': 'off',
-      // 每行最多属性数，3 个以上换行
-      'vue/max-attributes-per-line': ['warn', { singleline: 3, multiline: 1 }],
+      // 交给 oxfmt 决定属性换行，避免与 eslint 规则冲突
+      'vue/max-attributes-per-line': 'off',
     },
   },
   // TS/TSX 文件：TypeScript 解析器

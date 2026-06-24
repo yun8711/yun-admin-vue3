@@ -21,12 +21,7 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          class="w-full"
-          :loading="loading"
-          @click="handleLogin"
-        >
+        <el-button type="primary" class="w-full" :loading="loading" @click="handleLogin">
           登录
         </el-button>
       </el-form-item>
@@ -35,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
+import type { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import type { FormInstance, FormRules } from 'element-plus'
 
 const router = useRouter()
 const formRef = ref<FormInstance>()

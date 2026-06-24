@@ -1,6 +1,14 @@
 <template>
   <div class="dashboard">
-    <h1 class="text-xl font-bold mb-4">欢迎使用 Yun Admin</h1>
+    <y-page-header>
+      <template #extra>
+        <el-tag type="success" effect="dark">yun-elp 1.2.2 接入成功</el-tag>
+      </template>
+      <template #right>
+        <y-button type="primary">新建任务</y-button>
+      </template>
+    </y-page-header>
+
     <el-row :gutter="16">
       <el-col :span="6">
         <el-card shadow="hover">
@@ -39,6 +47,40 @@
         </el-card>
       </el-col>
     </el-row>
+
+    <el-card class="mt-4" shadow="never">
+      <y-part-title title="组件库接入验证">
+        <template #right>
+          <y-button plain>查看组件文档</y-button>
+        </template>
+      </y-part-title>
+      <div class="mt-3 text-sm text-gray-500">
+        当前模板项目已切换为 npm 发布版 `yun-elp@1.2.2`，启用了 `YunElpResolver` 按需导入和
+        `kd.scss` 主题注入。
+      </div>
+    </el-card>
+
+    <el-card class="mt-4" shadow="never">
+      <y-part-title title="UnoCSS 图标集合验证" />
+      <div class="mt-3 flex items-center gap-6 text-sm text-gray-500">
+        <div class="inline-flex items-center gap-2">
+          <i class="i-fill-logo text-24 text-primary" />
+          <span>`&lt;i class=\"i-fill-logo text-24 text-primary\" /&gt;`</span>
+        </div>
+        <div class="inline-flex items-center gap-2">
+          <i class="i-icon-card text-18 text-success" />
+          <span>`&lt;i class=\"i-icon-card text-18 text-success\" /&gt;`</span>
+        </div>
+        <div class="inline-flex items-center gap-2">
+          <i class="i-ep-folder-opened text-18 text-warning" />
+          <span>`&lt;i class=\"i-ep-folder-opened text-18 text-warning\" /&gt;`</span>
+        </div>
+        <div class="inline-flex items-center gap-2">
+          <i class="iconfont icon-menu-fold text-18 text-info" />
+          <span>`&lt;i class=\"iconfont icon-menu-fold text-18 text-info\" /&gt;`</span>
+        </div>
+      </div>
+    </el-card>
   </div>
 </template>
 
