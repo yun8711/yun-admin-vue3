@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
-  const token = ref<string>('')
+  // 从 localStorage 恢复 token，保证刷新后登录态不丢失（路由守卫依赖它）。
+  const token = ref<string>(localStorage.getItem('token') || '')
   const username = ref<string>('')
 
   function setToken(val: string) {

@@ -40,6 +40,17 @@ export default tseslint.config(
     rules: {
       'no-console': 'warn',
       'no-debugger': 'error',
+      // _ 前缀变量/参数视为有意未使用，不报 unused-vars
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      // Vue 模板中同样忽略 _ 前缀的未使用变量（如 slot props 重命名）
+      'vue/no-unused-vars': ['error', { ignorePattern: '^_' }],
       // Vue 单文件组件块顺序：template -> script -> style
       'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
       // 允许 v-html（Element Plus 等组件库可能使用）

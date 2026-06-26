@@ -32,9 +32,14 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
+import { useUserStore } from '@/stores/user'
+
+const route = useRoute()
 const router = useRouter()
+const userStore = useUserStore()
+
 const formRef = ref<FormInstance>()
 const loading = ref(false)
 
@@ -48,14 +53,13 @@ const rules: FormRules = {
 const handleLogin = async () => {
   if (!formRef.value) return
   await formRef.value.validate(valid => {
-    if (valid) {
-      loading.value = true
-      // TODO: 调用登录接口
-      setTimeout(() => {
-        loading.value = false
-        router.push('/dashboard')
-      }, 500)
-    }
+    if (!valid) return
+    loading.value = true
+    // TODO: 替换为真实登录接口，写入后端返回的 token。
+    userStore.setToken('mock-token')
+    userStore.setUsername(form.username)
+    const redirect = (route.query.redirect as string) || '/'
+    router.replace(redirect)
   })
 }
 </script>

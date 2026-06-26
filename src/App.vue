@@ -1,9 +1,13 @@
 <template>
-  <el-config-provider :locale="zhCn">
+  <y-app-wrap
+    :page-header="{ paddingX: '0', titleTextStyle: { 'font-size': '16px' } }"
+    :empty="{ image: EmptyPlaceholerImage }"
+    locale="zh-cn"
+  >
     <router-view />
-  </el-config-provider>
+  </y-app-wrap>
 </template>
 
 <script setup lang="ts">
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import EmptyPlaceholerImage from '@/assets/images/basic/empty.png'
 </script>

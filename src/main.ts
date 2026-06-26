@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import 'uno.css'
 import '@/assets/iconfont/iconfont.css'
 import '@/styles/index.scss'
+import 'yun-elp/themes/kd.scss'
 import App from './App.vue'
 import router from './router'
 

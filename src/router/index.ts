@@ -1,43 +1,39 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw, Router } from 'vue-router'
 
-import BasicLayout from '@/layouts/BasicLayout.vue'
-import BlankLayout from '@/layouts/BlankLayout.vue'
+import { constantRoutes, finalRoute } from './constant-routes'
+import { setupRouterGuard } from './guard'
 
-const routes: RouteRecordRaw[] = [
-  {
-    path: '/login',
-    component: BlankLayout,
-    children: [
-      {
-        path: '',
-        name: 'Login',
-        component: () => import('@/views/login/index.vue'),
-        meta: { title: '登录', noAuth: true },
-      },
-    ],
-  },
-  {
-    path: '/',
-    component: BasicLayout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '首页' },
-      },
-    ],
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: () => import('@/views/error/404.vue'),
-    meta: { title: '404', noAuth: true },
-  },
-]
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: constantRoutes,
+})
 
-const router = createRouter({ history: createWebHistory(import.meta.env.BASE_URL), routes })
+// 已注入动态路由的清理函数集合，用于精确移除（vue-router 4 的 addRoute 返回移除函数）。
+let dynamicRouteRemovers: (() => void)[] = []
+
+/** 注入动态路由：作为 Root 的子路由，并在末尾追加兜底路由。 */
+export function addDynamicRoutes(target: Router, routes: RouteRecordRaw[]): void {
+  resetDynamicRoutes()
+  for (const route of routes) {
+    dynamicRouteRemovers.push(target.addRoute('Root', route))
+  }
+  dynamicRouteRemovers.push(target.addRoute(finalRoute))
+}
+
+/** 移除全部动态路由，恢复到仅含常量路由的状态。 */
+export function resetDynamicRoutes(): void {
+  while (dynamicRouteRemovers.length) {
+    dynamicRouteRemovers.pop()?.()
+  }
+  dynamicRouteRemovers = []
+}
+
+/** 兼容入口：重置动态路由。 */
+export function resetRouter(): void {
+  resetDynamicRoutes()
+}
+
+setupRouterGuard(router)
 
 export default router

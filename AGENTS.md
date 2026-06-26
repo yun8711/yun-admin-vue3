@@ -18,6 +18,10 @@
 - Node.js >= 20
 - 包管理器固定为 `pnpm`
 
+### yun-elp
+
+yun-elp 是一个基于 element-plus 二次封装的业务组件库，提供了yun-elp-mcp代本地查询组件信息，还提供了在线的：[官方文档](https://yun8711.github.io/yun-elp/)、[llms.txt](https://yun8711.github.io/yun-elp/llms.txt)、[llms-full.txt](https://yun8711.github.io/yun-elp/llms-full.txt)、[components.json](https://yun8711.github.io/yun-elp/metadata/components.json)、[sitemap.xml](https://yun8711.github.io/yun-elp/sitemap.xml) 以便查询。
+
 ## 代码质量工具
 
 - Lint: `oxlint` + `eslint`

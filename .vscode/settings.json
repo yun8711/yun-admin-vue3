@@ -4,9 +4,7 @@
   "editor.formatOnSaveMode": "file",
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "eslint.useFlatConfig": true,
@@ -30,18 +28,8 @@
   "[jsonc]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
-  "stylelint.validate": [
-    "css",
-    "scss",
-    "vue"
-  ],
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
+  "stylelint.validate": ["css", "scss", "vue"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue"],
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
