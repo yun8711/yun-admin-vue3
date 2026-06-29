@@ -1,0 +1,192 @@
+{
+    "收起菜单": {
+        "zh-CN": "收起菜单",
+        "en": "收起菜单",
+        "ja": "收起菜单",
+        "ar": "收起菜单",
+        "$files": [
+            "layouts/Sidebar/index.vue"
+        ]
+    },
+    "没有访问权限": {
+        "zh-CN": "没有访问权限",
+        "en": "没有访问权限",
+        "ja": "没有访问权限",
+        "ar": "没有访问权限",
+        "$files": [
+            "views/error/components/NoAccess.vue"
+        ]
+    },
+    "返回首页": {
+        "zh-CN": "返回首页",
+        "en": "返回首页",
+        "ja": "返回首页",
+        "ar": "返回首页",
+        "$files": [
+            "views/error/components/NoAccess.vue",
+            "views/error/components/NotFound.vue"
+        ]
+    },
+    "抱歉，页面走丢了": {
+        "zh-CN": "抱歉，页面走丢了",
+        "en": "抱歉，页面走丢了",
+        "ja": "抱歉，页面走丢了",
+        "ar": "抱歉，页面走丢了",
+        "$files": [
+            "views/error/components/NotFound.vue"
+        ]
+    },
+    "通过顶部语言下拉切换语言，下方内容会实时更新": {
+        "zh-CN": "通过顶部语言下拉切换语言，下方内容会实时更新",
+        "en": "通过顶部语言下拉切换语言，下方内容会实时更新",
+        "ja": "通过顶部语言下拉切换语言，下方内容会实时更新",
+        "ar": "通过顶部语言下拉切换语言，下方内容会实时更新",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "基础翻译": {
+        "zh-CN": "基础翻译",
+        "en": "基础翻译",
+        "ja": "基础翻译",
+        "ar": "基础翻译",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "直接调用 t() 函数进行文本翻译": {
+        "zh-CN": "直接调用 t() 函数进行文本翻译",
+        "en": "直接调用 t() 函数进行文本翻译",
+        "ja": "直接调用 t() 函数进行文本翻译",
+        "ar": "直接调用 t() 函数进行文本翻译",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "你好，世界！": {
+        "zh-CN": "你好，世界！",
+        "en": "你好，世界！",
+        "ja": "你好，世界！",
+        "ar": "你好，世界！",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "变量插值": {
+        "zh-CN": "变量插值",
+        "en": "变量插值",
+        "ja": "变量插值",
+        "ar": "变量插值",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "你好，{\"{name}\"}！": {
+        "zh-CN": "你好，{\"{name}\"}！",
+        "en": "你好，{\"{name}\"}！",
+        "ja": "你好，{\"{name}\"}！",
+        "ar": "你好，{\"{name}\"}！",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "你好，{name}！": {
+        "zh-CN": "你好，{name}！",
+        "en": "你好，{name}！",
+        "ja": "你好，{name}！",
+        "ar": "你好，{name}！",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "复数形式": {
+        "zh-CN": "复数形式",
+        "en": "复数形式",
+        "ja": "复数形式",
+        "ar": "复数形式",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "当前计数：{count}": {
+        "zh-CN": "当前计数：{count}",
+        "en": "当前计数：{count}",
+        "ja": "当前计数：{count}",
+        "ar": "当前计数：{count}",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "无消息": {
+        "zh-CN": "无消息",
+        "en": "无消息",
+        "ja": "无消息",
+        "ar": "无消息",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "{count} 条消息": {
+        "zh-CN": "{count} 条消息",
+        "en": "{count} 条消息",
+        "ja": "{count} 条消息",
+        "ar": "{count} 条消息",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "组件用法": {
+        "zh-CN": "组件用法",
+        "en": "组件用法",
+        "ja": "组件用法",
+        "ar": "组件用法",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "使用 Translate 组件进行翻译": {
+        "zh-CN": "使用 Translate 组件进行翻译",
+        "en": "使用 Translate 组件进行翻译",
+        "ja": "使用 Translate 组件进行翻译",
+        "ar": "使用 Translate 组件进行翻译",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "Translate 组件示例": {
+        "zh-CN": "Translate 组件示例",
+        "en": "Translate 组件示例",
+        "ja": "Translate 组件示例",
+        "ar": "Translate 组件示例",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "当前语言信息": {
+        "zh-CN": "当前语言信息",
+        "en": "当前语言信息",
+        "ja": "当前语言信息",
+        "ar": "当前语言信息",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "当前语言：{lang}": {
+        "zh-CN": "当前语言：{lang}",
+        "en": "当前语言：{lang}",
+        "ja": "当前语言：{lang}",
+        "ar": "当前语言：{lang}",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    },
+    "可用语言：": {
+        "zh-CN": "可用语言：",
+        "en": "可用语言：",
+        "ja": "可用语言：",
+        "ar": "可用语言：",
+        "$files": [
+            "views/examples/i18n-demo/index.vue"
+        ]
+    }
+}
