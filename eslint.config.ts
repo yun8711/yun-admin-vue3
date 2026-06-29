@@ -14,6 +14,8 @@ export default tseslint.config(
       'dist/**',
       '**/*.config.{ts,js,mjs,cjs}',
       'public/**',
+      'src/i18n/**',
+      'src/languages/**',
       'pnpm-lock.yaml',
       '*.d.ts',
     ],
