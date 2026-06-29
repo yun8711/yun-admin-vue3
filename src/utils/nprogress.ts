@@ -22,6 +22,7 @@ export function start(): void {
     el.style.opacity = '1'
     el.style.transition = 'none'
     el.style.width = '0'
+
      
     el.offsetHeight // 强制重绘
     el.style.transition = 'width 0.4s ease'
@@ -36,6 +37,7 @@ export function start(): void {
       'position:fixed;top:0;left:0;z-index:9999;height:2px;' +
       'background:var(--el-color-primary);width:0;opacity:1'
     document.body.appendChild(bar)
+
      
     bar.offsetHeight
     bar.style.transition = 'width 0.4s ease'

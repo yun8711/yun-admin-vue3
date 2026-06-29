@@ -11,6 +11,12 @@ const routes: RouteRecordRaw = {
       component: () => import('@/views/examples/list/list-simple.vue'),
       meta: { title: '列表页-简单', cache: true },
     },
+    {
+      path: 'i18n-demo',
+      name: 'I18nDemo',
+      component: () => import('@/views/examples/i18n-demo/index.vue'),
+      meta: { title: '国际化示例' },
+    },
   ],
 }
 

@@ -9,8 +9,9 @@ import type {
 import { ElMessage } from 'element-plus'
 import { get, isPlainObject, isString, merge } from 'lodash-es'
 
-// import 'element-plus/es/components/message/style/css'
 import { appRequestConfig, resolveRequestUrl } from '@/config/app'
+// import 'element-plus/es/components/message/style/css'
+import { getStoredLang } from '@/i18n'
 import router from '@/router'
 import { useUserStore } from '@/stores/user'
 
@@ -173,6 +174,8 @@ instance.interceptors.request.use(
     const token = localStorage.getItem('token')
     if (token) {
       config.headers.set('Authorization', `Bearer ${token}`)
+
+      config.headers.set('Accept-Language', getStoredLang())
     }
 
     const contentType = readHeader(config, 'content-type')
@@ -234,7 +237,7 @@ instance.interceptors.response.use(
       }
 
       if (router.currentRoute.value.path !== '/login') {
-        router.push('/login')
+        router.push('/')
       }
     }
 

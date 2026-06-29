@@ -2,22 +2,20 @@ import { ElMessage } from 'element-plus'
 import type { RouteLocationNormalized, Router } from 'vue-router'
 
 import { sendMessage } from '@/composables/useQiankunActions'
-import { APP_TITLE, SKIP_MENU_AUTH } from '@/config/menu'
+import { APP_TITLE } from '@/config/menu'
 import { useGlobalStore } from '@/stores/global'
 import { usePermissionStore } from '@/stores/permission'
-import { useUserStore } from '@/stores/user'
 import { done, remove, start } from '@/utils/nprogress'
 
 import { CATCH_ALL_NAME } from './constant-routes'
-import { addDynamicRoutes, resetDynamicRoutes } from './index'
+import { addDynamicRoutes } from './index'
 
-// 免登录页面白名单：跳过菜单权限时无登录页，仅 404
-const WHITE_LIST: string[] = SKIP_MENU_AUTH ? ['/404'] : ['/login', '/404']
+/** 免权限页面白名单 */
+const WHITE_LIST = ['/404']
 
-/** 安装路由守卫：对标 rhea-fe routerEach.js 实现完整守卫逻辑。 */
+/** 安装路由守卫。 */
 export function setupRouterGuard(router: Router): void {
   router.beforeEach(async to => {
-    const userStore = useUserStore()
     const permissionStore = usePermissionStore()
     const globalStore = useGlobalStore()
 
@@ -29,16 +27,6 @@ export function setupRouterGuard(router: Router): void {
 
     // 白名单/免权限页面直接放行
     if (to.meta?.noAuth || WHITE_LIST.includes(to.path)) return true
-
-    // 跳过菜单权限时，不要求登录态
-    if (!SKIP_MENU_AUTH) {
-      if (!userStore.token) {
-        permissionStore.reset()
-        resetDynamicRoutes()
-        const redirect = to.fullPath === '/' ? undefined : to.fullPath
-        return { path: '/login', query: redirect ? { redirect } : {}, replace: true }
-      }
-    }
 
     // 已生成动态路由
     if (permissionStore.loaded) {
@@ -68,8 +56,7 @@ export function setupRouterGuard(router: Router): void {
       console.error('[router] generate routes failed:', error)
       ElMessage.error('路由初始化失败')
       remove()
-      userStore.logout()
-      return { path: SKIP_MENU_AUTH ? '/404' : '/login', replace: true }
+      return { path: '/404', replace: true }
     }
   })
 

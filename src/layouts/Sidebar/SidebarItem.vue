@@ -70,7 +70,7 @@ const titleIndentStyle = computed(() => {
 
 <style scoped lang="scss">
 .menu-icon {
-  margin-right: 8px;
+  margin-inline-end: 8px;
   font-size: 18px;
 }
 </style>

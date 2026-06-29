@@ -1,3 +1,4 @@
+import { i18nPlugin } from '@voerkai18n/vue'
 import { createPinia } from 'pinia'
 // @see https://www.npmjs.com/package/vite-plugin-qiankun
 import {
@@ -29,6 +30,8 @@ function render(props: QiankunProps = {}) {
 
   app = createApp(App)
   app.use(createPinia())
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  app.use(i18nPlugin as any)
   app.use(router)
   app.mount(mountNode || '#app')
 }
@@ -38,6 +41,7 @@ function render(props: QiankunProps = {}) {
 if (qiankunWindow.__POWERED_BY_QIANKUN__) {
   renderWithQiankun({
     bootstrap() {
+      // eslint-disable-next-line no-console
       console.log('子应用【rhea】加载')
     },
     mount(props: QiankunProps) {

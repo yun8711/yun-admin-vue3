@@ -47,11 +47,11 @@ VITE_APP_PROXY_TARGET=http://192.168.122.130
 
 **三层配合：**
 
-| 层级 | 入口 | 职责 | 对应 rhea-fe |
-|------|------|------|-------------|
-| 构建配置 | `vite.config.ts` -> `buildPrefixProxy()` | 从 `VITE_APP_API_PREFIXES` 生成多前缀代理规则（`/rhea_dev` → `host/rhea`） | `getProxy()` |
-| 运行时 | `src/config/app.ts` -> `resolveRequestUrl()` | 请求拦截中匹配 URL 前缀，未匹配则补默认前缀；dev 下追加 `_dev` 后缀 | `setAxios()` |
-| 请求层 | `src/utils/request.ts` 请求拦截器 | 调用 `resolveRequestUrl(config.url)` 完成 URL 改写 | — |
+| 层级     | 入口                                         | 职责                                                                       | 对应 rhea-fe |
+| -------- | -------------------------------------------- | -------------------------------------------------------------------------- | ------------ |
+| 构建配置 | `vite.config.ts` -> `buildPrefixProxy()`     | 从 `VITE_APP_API_PREFIXES` 生成多前缀代理规则（`/rhea_dev` → `host/rhea`） | `getProxy()` |
+| 运行时   | `src/config/app.ts` -> `resolveRequestUrl()` | 请求拦截中匹配 URL 前缀，未匹配则补默认前缀；dev 下追加 `_dev` 后缀        | `setAxios()` |
+| 请求层   | `src/utils/request.ts` 请求拦截器            | 调用 `resolveRequestUrl(config.url)` 完成 URL 改写                         | —            |
 
 **运行时链路示例（开发环境）：**
 
@@ -137,26 +137,26 @@ VITE_APP_PROXY_TARGET=http://192.168.122.130
 
 ### 环境变量
 
-| 变量 | 说明 | 开发默认值 | 生产默认值 |
-|------|------|-----------|-----------|
-| `VITE_QIANKUN_ENABLED` | 是否启用 qiankun 子应用模式（Vite 配置层） | `false` | `true` |
+| 变量                   | 说明                                       | 开发默认值 | 生产默认值 |
+| ---------------------- | ------------------------------------------ | ---------- | ---------- |
+| `VITE_QIANKUN_ENABLED` | 是否启用 qiankun 子应用模式（Vite 配置层） | `false`    | `true`     |
 
 ### 职责划分
 
-| 层级 | 判断方式 | 用途 |
-|------|---------|------|
-| Vite 构建/开发配置 | `VITE_QIANKUN_ENABLED` 环境变量 | 控制 `vite-plugin-qiankun` 插件、`base` 路径、dev self-proxy |
-| 运行时 | `qiankunWindow.__POWERED_BY_QIANKUN__` | `main.ts` 生命周期注册、`inQiankun` getter |
+| 层级               | 判断方式                               | 用途                                                         |
+| ------------------ | -------------------------------------- | ------------------------------------------------------------ |
+| Vite 构建/开发配置 | `VITE_QIANKUN_ENABLED` 环境变量        | 控制 `vite-plugin-qiankun` 插件、`base` 路径、dev self-proxy |
+| 运行时             | `qiankunWindow.__POWERED_BY_QIANKUN__` | `main.ts` 生命周期注册、`inQiankun` getter                   |
 
 ### 配置入口
 
-| 入口 | 说明 |
-|------|------|
-| `.env.development` / `.env.production` | `VITE_QIANKUN_ENABLED` 控制 Vite 插件开关 |
-| `vite.config.ts` | `base` 条件化（qiankun dev → `/`，生产 → `/subapp/rhea/`）；条件加载 `qiankun('rhea', { useDevMode: true })` 插件；dev self-proxy（`/subapp` 回源到自身） |
-| `src/main.ts` | 运行时检测 `qiankunWindow.__POWERED_BY_QIANKUN__`，注册/不注册生命周期 |
-| `src/config/app.ts` | `inQiankun` 改为 getter，每次访问实时读取 `qiankunWindow.__POWERED_BY_QIANKUN__` |
-| `src/composables/useQiankunActions.ts` | 主应用与子应用通信封装（`onGlobalStateChange` / `setGlobalState` / `sendMessage` / `receiveMessage`） |
+| 入口                                   | 说明                                                                                                                                                      |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.env.development` / `.env.production` | `VITE_QIANKUN_ENABLED` 控制 Vite 插件开关                                                                                                                 |
+| `vite.config.ts`                       | `base` 条件化（qiankun dev → `/`，生产 → `/subapp/rhea/`）；条件加载 `qiankun('rhea', { useDevMode: true })` 插件；dev self-proxy（`/subapp` 回源到自身） |
+| `src/main.ts`                          | 运行时检测 `qiankunWindow.__POWERED_BY_QIANKUN__`，注册/不注册生命周期                                                                                    |
+| `src/config/app.ts`                    | `inQiankun` 改为 getter，每次访问实时读取 `qiankunWindow.__POWERED_BY_QIANKUN__`                                                                          |
+| `src/composables/useQiankunActions.ts` | 主应用与子应用通信封装（`onGlobalStateChange` / `setGlobalState` / `sendMessage` / `receiveMessage`）                                                     |
 
 ### 行为说明
 
@@ -164,6 +164,7 @@ VITE_APP_PROXY_TARGET=http://192.168.122.130
 - **`VITE_QIANKUN_ENABLED=false`**：插件不加载，`base` 始终为 `/subapp/rhea/`，应用独立运行。
 
 运行时行为：
+
 - `qiankunWindow.__POWERED_BY_QIANKUN__ === true` → `main.ts` 调用 `renderWithQiankun` 注册 `bootstrap/mount/unmount/update` 生命周期，mount 时注入主应用 actions
 - `qiankunWindow.__POWERED_BY_QIANKUN__ === false/undefined` → 直接 `createApp` + `mount` 独立运行
 
@@ -181,7 +182,7 @@ VITE_APP_PROXY_TARGET=http://192.168.122.130
 ```ts
 import { onGlobalStateChange, receiveMessage, hasProperty } from '@/composables/useQiankunActions'
 
-onGlobalStateChange((state) => {
+onGlobalStateChange(state => {
   if (hasProperty(state, 'tabPrefix')) {
     // 浏览器标签页前缀
   }

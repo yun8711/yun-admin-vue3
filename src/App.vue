@@ -2,7 +2,7 @@
   <y-app-wrap
     :page-header="{ paddingX: '0', titleTextStyle: { 'font-size': '16px' } }"
     :empty="{ image: EmptyPlaceholerImage }"
-    locale="zh-cn"
+    :locale="elLocaleString"
     :elp-config="{ namespace: 'ep' }"
     y-namespace="yp"
   >
@@ -15,6 +15,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 import EmptyPlaceholerImage from '@/assets/images/basic/empty.png'
+import { useLocale } from '@/composables/useLocale'
 // 主应用消息通信
 import { onGlobalStateChange, receiveMessage, hasProperty } from '@/composables/useQiankunActions'
 import { addDynamicRoutes, resetDynamicRoutes } from '@/router'
@@ -26,6 +27,9 @@ const router = useRouter()
 const route = useRoute()
 const globalStore = useGlobalStore()
 const permissionStore = usePermissionStore()
+
+// yun-elp locale 字符串，Element Plus locale 由 y-app-wrap 内部管理
+const { elLocaleString } = useLocale()
 
 /** 租户切换后用于强制刷新 router-view */
 const viewKey = ref(0)

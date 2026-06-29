@@ -53,6 +53,8 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useLocale } from '@/composables/useLocale'
+import type { SupportedLang } from '@/i18n'
 import type { MenuNode } from '@/router/types'
 import { usePermissionStore } from '@/stores/permission'
 import { useUserStore } from '@/stores/user'
@@ -61,6 +63,9 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 const permissionStore = usePermissionStore()
+
+// 语言切换管理（仅切换逻辑，NavHead 自身不参与国际化翻译）
+const { activeLanguage, languages, changeLanguage } = useLocale()
 
 // ========== 一级导航 ==========
 
@@ -96,25 +101,25 @@ const projectName = computed(() => {
   }
 })
 
-// ========== 多语言（UI 占位，后续接入 i18n） ==========
+// ========== 多语言切换 ==========
 
 interface LangOption {
   label: string
   value: string
 }
 
-const langOptions: LangOption[] = [
-  { label: '中文', value: 'zh-cn' },
-  { label: 'English', value: 'en' },
-  { label: '日本語', value: 'ja' },
-  { label: 'العربية', value: 'ar' },
-]
+const langOptions = computed<LangOption[]>(() =>
+  languages.map(l => ({
+    label: l.title,
+    value: l.name,
+  }))
+)
 
-const currentLang = ref<string>('zh-cn')
+const currentLang = ref<string>(activeLanguage.value)
 
-function onLangChange(lang: string): void {
+async function onLangChange(lang: string): Promise<void> {
   currentLang.value = lang
-  // TODO: 接入 i18n 后在此处调用 locale 切换逻辑
+  await changeLanguage(lang as SupportedLang)
 }
 
 // ========== 用户操作 ==========
@@ -122,7 +127,7 @@ function onLangChange(lang: string): void {
 function onCommand(command: string) {
   if (command === 'logout') {
     userStore.logout()
-    router.replace('/login')
+    router.replace('/')
   }
 }
 </script>
@@ -139,7 +144,7 @@ function onCommand(command: string) {
 .nav-head-menu {
   --ep-menu-horizontal-height: 49px;
 
-  margin-left: 24px;
+  margin-inline-start: 24px;
   border-bottom: none !important;
 
   :deep(.ep-menu-item) {

@@ -228,6 +228,7 @@
     "useLastChanged": true,
     "useLink": true,
     "useLocalStorage": true,
+    "useLocale": true,
     "useMagicKeys": true,
     "useManualRefHistory": true,
     "useMediaControls": true,

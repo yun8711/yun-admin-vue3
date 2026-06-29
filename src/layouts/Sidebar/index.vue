@@ -23,13 +23,14 @@
       <!-- 底部折叠/展开按钮 -->
       <div class="sidebar-footer" @click="toggle">
         <i :class="isCollapsed ? 'i-ep-expand' : 'i-ep-fold'" class="text-16" />
-        <span v-show="!isCollapsed" class="sidebar-footer-text">收起菜单</span>
+        <span v-show="!isCollapsed" class="sidebar-footer-text">{{ t('收起菜单') }}</span>
       </div>
     </template>
   </aside>
 </template>
 
 <script setup lang="ts">
+import { useVoerkaI18n } from '@voerkai18n/vue'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -72,6 +73,7 @@ const emit = defineEmits<{
   'update:visible': [value: boolean]
 }>()
 
+const { t } = useVoerkaI18n()
 const router = useRouter()
 
 // 合并默认层级缩进与用户传入的缩进覆盖
@@ -136,7 +138,7 @@ defineExpose({ toggle, collapse, expand, hide, show })
 
   box-sizing: border-box;
   height: 100%;
-  border-right: 1px solid var(--sidebar-border, var(--el-border-color-light));
+  border-inline-end: 1px solid var(--sidebar-border, var(--el-border-color-light));
 
   transition: width 0.2s;
 }
@@ -151,7 +153,7 @@ defineExpose({ toggle, collapse, expand, hide, show })
 }
 
 .sidebar-menu {
-  border-right-width: 0;
+  border-inline-end-width: 0;
 }
 
 // 菜单项公共样式
@@ -201,7 +203,7 @@ defineExpose({ toggle, collapse, expand, hide, show })
   &-text {
     overflow: hidden;
 
-    margin-left: 8px;
+    margin-inline-start: 8px;
 
     font-size: 12px;
     text-overflow: ellipsis;

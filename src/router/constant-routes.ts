@@ -1,6 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import { SKIP_MENU_AUTH } from '@/config/menu'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import BlankLayout from '@/layouts/BlankLayout.vue'
 
@@ -9,24 +8,6 @@ export const CATCH_ALL_NAME = '__catch_all__'
 
 // 固定路由：无需登录/权限，路由创建时即注册。
 export const constantRoutes: RouteRecordRaw[] = [
-  // 跳过菜单权限时不注册登录页，子应用由主应用统一认证
-  ...(!SKIP_MENU_AUTH
-    ? [
-        {
-          path: '/login',
-          component: BlankLayout,
-          meta: { noAuth: true },
-          children: [
-            {
-              path: '',
-              name: 'Login',
-              component: () => import('@/views/login/index.vue'),
-              meta: { title: '登录', noAuth: true },
-            },
-          ],
-        } as RouteRecordRaw,
-      ]
-    : []),
   {
     path: '/404',
     component: BlankLayout,
