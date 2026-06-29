@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "i18n:extract": "voerkai18n extract",
+    "i18n:compile": "voerkai18n compile",
     "preinstall": "npx only-allow pnpm",
     "dev": "vite",
     "typecheck": "vue-tsc --noEmit",
