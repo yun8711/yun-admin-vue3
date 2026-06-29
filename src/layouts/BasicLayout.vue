@@ -1,38 +1,21 @@
 <template>
-  <el-container class="basic-layout h-screen">
-    <el-header height="50px" class="header flex items-center justify-between border-b-1">
-      <div class="flex items-center gap-2">
-        <i
-          class="text-20 cursor-pointer"
-          :class="sidebarCollapsed ? 'i-ep-expand' : 'i-ep-fold'"
-          @click="sidebarCollapsed = !sidebarCollapsed"
-        />
-        <span class="text-lg font-medium">后台管理系统</span>
-      </div>
+  <el-container
+    class="basic-layout h-screen"
+    :style="inQiankun ? { height: 'calc(100vh - 50px)' } : {}"
+    direction="vertical"
+  >
+    <NavHead v-if="!inQiankun" />
 
-      <div class="flex items-center gap-2">
-        <el-dropdown @command="onCommand">
-          <span class="el-dropdown-link cursor-pointer">
-            {{ userStore.username || '用户' }}
-            <i class="i-ep-arrow-down" />
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
-    </el-header>
     <el-container>
-      <!-- 侧边栏 -->
+      <!-- 侧边栏：仅展示当前激活一级菜单的 children，visible 受 meta.sidebar 控制 -->
       <Sidebar
         v-model:collapsed="sidebarCollapsed"
-        :menu-list="permissionStore.menuList"
+        v-model:visible="sidebarVisible"
+        :menu-list="sidebarMenuList"
         :active-menu="activeMenu"
       />
 
-      <el-main class="main overflow-auto" :style="{ '--el-main-padding': 0 }">
+      <el-main class="main overflow-auto" :style="{ '--ep-main-padding': 0 }">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component :is="Component" />
@@ -44,41 +27,53 @@
 </template>
 
 <script setup lang="ts">
+import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
+import NavHead from '@/layouts/NavHead/index.vue'
 import Sidebar from '@/layouts/Sidebar/index.vue'
+import type { MenuNode } from '@/router/types'
+import { useGlobalStore } from '@/stores/global'
 import { usePermissionStore } from '@/stores/permission'
-import { useUserStore } from '@/stores/user'
 
+const inQiankun = qiankunWindow.__POWERED_BY_QIANKUN__
 const route = useRoute()
-const router = useRouter()
-const userStore = useUserStore()
 const permissionStore = usePermissionStore()
+const globalStore = useGlobalStore()
 
 // 侧边栏折叠状态
 const sidebarCollapsed = ref(false)
 
+// 侧边栏可见性：由路由守卫 setSidebar() 写入 globalStore.sidebarStatus 控制
+const sidebarVisible = computed(() => globalStore.sidebarStatus !== 'hidden')
+
 // 优先按 meta.activeMenu 高亮（下钻页归属到所属菜单）
 const activeMenu = computed(() => (route.meta?.activeMenu as string) || route.path)
 
-function onCommand(command: string) {
-  if (command === 'logout') {
-    userStore.logout()
-    router.replace('/login')
+/** 一级菜单列表（menuList 第一层），用作顶部导航标签 */
+const topLevelMenus = computed<MenuNode[]>(() => permissionStore.menuList)
+
+/** 根据当前路由路径匹配激活的一级菜单 */
+const activeTopLevel = computed<string>(() => {
+  const currentPath = route.path
+  for (const menu of topLevelMenus.value) {
+    if (currentPath === menu.path || currentPath.startsWith(`${menu.path}/`)) {
+      return menu.path
+    }
   }
-}
+  return topLevelMenus.value[0]?.path ?? ''
+})
+
+/** 侧边栏菜单：仅展示当前激活一级菜单的 children */
+const sidebarMenuList = computed<MenuNode[]>(() => {
+  const active = topLevelMenus.value.find(m => m.path === activeTopLevel.value)
+  return active?.children ?? []
+})
 </script>
 
 <style scoped lang="scss">
 .basic-layout {
-  .header {
-    flex-shrink: 0;
-    box-sizing: border-box;
-    height: 50px;
-    border-bottom: 1px solid var(--el-border-color-light);
-  }
-
   .main {
     height: 100%;
   }

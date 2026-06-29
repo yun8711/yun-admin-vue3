@@ -9,5 +9,5 @@
     "pnpm-lock.yaml"
   ],
   "categories": { "correctness": "deny", "suspicious": "warn" },
-  "rules": { "no-console": "warn", "no-debugger": "error" }
+  "rules": { "no-console": "off", "no-debugger": "error" }
 }

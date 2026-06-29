@@ -138,8 +138,6 @@ defineExpose({ toggle, collapse, expand, hide, show })
   height: 100%;
   border-right: 1px solid var(--sidebar-border, var(--el-border-color-light));
 
-  background-color: var(--sidebar-bg, #304156);
-
   transition: width 0.2s;
 }
 
@@ -193,8 +191,6 @@ defineExpose({ toggle, collapse, expand, hide, show })
   height: 56px;
   padding: 8px 16px;
   border-top: 1px solid var(--sidebar-border, var(--el-border-color-light));
-
-  color: var(--sidebar-text, #bfcbd9);
 
   transition: background-color 0.2s;
 

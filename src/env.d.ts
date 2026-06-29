@@ -19,6 +19,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_TITLE?: string
   readonly VITE_APP_FE_PORT?: string
   readonly VITE_APP_PROXY_TARGET?: string
+  readonly VITE_QIANKUN_ENABLED?: string
 }
 
 interface ImportMeta {

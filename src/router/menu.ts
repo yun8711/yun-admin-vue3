@@ -52,30 +52,55 @@ export function filterAsyncRoutes(
 
   for (const route of routes as RouteLike[]) {
     const fullPath = joinPath(parentPath, route.path)
-    paths.push(fullPath)
 
     const menuKey = route.meta?.menuKey
     const auth = menuKey ? authMap.get(menuKey) : undefined
+    // 条件 1：配置了 menuKey 但后端未返回 → 无权限，不展示
     const accessible = skip || !menuKey || Boolean(auth)
     if (!accessible) continue
 
     const isMenu = route.meta?.isMenu ?? !route.meta?.hidden
 
-    const merged = {
+    // 后端 externalUrl 存在时使用其作为 path
+    const merged: RouteLike = {
       ...route,
+      path: (auth?.externalUrl as string) || route.path,
       meta: {
         ...route.meta,
+        parent: route.meta?.parent ?? '',
         isMenu,
         title: isMenu && auth?.name ? auth.name : route.meta?.title,
+        icon: route.meta?.icon, // 图标始终取本地，不与后端合并
+        activeMenu: route.meta?.activeMenu ?? '',
         btnList: auth?.btnList ?? route.meta?.btnList ?? [],
         serialNum: auth?.serialNum ?? route.meta?.serialNum ?? 0,
+        menuKey: route.meta?.menuKey,
+        sidebar: route.meta?.sidebar,
+        breadcrumb: route.meta?.breadcrumb,
+        cache: route.meta?.cache ?? false,
       },
-    } as RouteLike
+    }
 
+    // 递归处理子路由
+    let childResult: { routes: RouteRecordRaw[]; paths: string[] } | null = null
     if (route.children?.length) {
-      const child = filterAsyncRoutes(route.children, authMap, skip, fullPath)
-      merged.children = child.routes
-      paths.push(...child.paths)
+      childResult = filterAsyncRoutes(route.children, authMap, skip, fullPath)
+      merged.children = childResult.routes
+
+      // 未显式指定 redirect 则自动指向第一个子路由
+      if (!merged.redirect && childResult.routes.length > 0) {
+        merged.redirect = joinPath(fullPath, childResult.routes[0].path)
+      }
+    }
+
+    // 条件 2：子路由全部被过滤掉，且父路由无 component 无 redirect → 不展示
+    if (childResult && childResult.routes.length === 0 && !merged.component && !merged.redirect) {
+      continue
+    }
+
+    paths.push(fullPath)
+    if (childResult) {
+      paths.push(...childResult.paths)
     }
 
     result.push(merged as RouteRecordRaw)
