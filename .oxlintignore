@@ -1,7 +1,0 @@
-node_modules
-dist
-*.config.ts
-*.config.js
-public
-.env*
-pnpm-lock.yaml

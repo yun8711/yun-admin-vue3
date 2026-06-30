@@ -24,7 +24,7 @@ yun-elp 是一个基于 element-plus 二次封装的业务组件库，提供了y
 
 ## 代码质量工具
 
-- Lint: `oxlint` + `eslint`
+- Lint: `eslint`
 - Typecheck: `vue-tsc`
 - Format: `oxfmt`
 - Style: `stylelint`

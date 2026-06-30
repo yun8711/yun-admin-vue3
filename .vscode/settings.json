@@ -35,7 +35,7 @@
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, .npmrc, .nvmrc, .node-version, commitlint.config.js",
     "tsconfig.json": "tsconfig.*.json, tsconfig.tsbuildinfo",
-    "vite.config.ts": "vite.config.*, uno.config.ts, eslint.config.*, stylelint.config.*, .oxlintrc.json, .oxlintignore, .oxfmtrc.jsonc, .stylelintignore, .eslintrc-auto-import.json",
+    "vite.config.ts": "vite.config.*, uno.config.ts, eslint.config.*, stylelint.config.*, .oxfmtrc.jsonc, .stylelintignore, .eslintrc-auto-import.json",
     ".env.example": ".env, .env.*",
     "README.md": "AGENTS.md, LICENSE*, CHANGELOG*",
     "*.vue": "$(capture).spec.ts, $(capture).test.ts",

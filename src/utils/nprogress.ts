@@ -23,8 +23,7 @@ export function start(): void {
     el.style.transition = 'none'
     el.style.width = '0'
 
-     
-    el.offsetHeight // 强制重绘
+    void el.offsetHeight // 强制重绘
     el.style.transition = 'width 0.4s ease'
     // 下一帧再设宽度，确保 transition 生效
     requestAnimationFrame(() => {
@@ -38,8 +37,7 @@ export function start(): void {
       'background:var(--el-color-primary);width:0;opacity:1'
     document.body.appendChild(bar)
 
-     
-    bar.offsetHeight
+    void bar.offsetHeight
     bar.style.transition = 'width 0.4s ease'
     requestAnimationFrame(() => {
       bar.style.width = '30%'

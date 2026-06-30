@@ -1,5 +1,4 @@
 import js from '@eslint/js'
-import oxlintPlugin from 'eslint-plugin-oxlint'
 import pluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
@@ -24,8 +23,6 @@ export default tseslint.config(
   js.configs.recommended,
   // TypeScript 规则
   ...tseslint.configs.recommended,
-  // 关闭 oxlint 已覆盖的规则，避免重复检查（项目使用 oxlint 作为主 linter）
-  ...oxlintPlugin.configs['flat/recommended'],
   // Vue 3 推荐规则（包含 essential + strongly-recommended + 社区最佳实践）
   ...pluginVue.configs['flat/recommended'],
   // 通用配置（Vue 文件的 parser 由 pluginVue 单独处理）
