@@ -23,8 +23,8 @@ let dynamicRouteRemovers: (() => void)[] = []
 /** 注入动态路由：作为 Root 的子路由，移除初始兜底后追加最终兜底路由。 */
 export function addDynamicRoutes(target: Router, routes: RouteRecordRaw[]): void {
   resetDynamicRoutes()
-  // 初始兜底（redirect: '/'）→ 最终兜底（redirect: '/404'）
-  // 初始兜底（redirect: '/'）→ 最终兜底（redirect: '/404'）
+  //   // 初始兜底（redirect: '/'）→ 最终兜底（redirect: '/404'）
+  //   // 初始兜底（redirect: '/'）→ 最终兜底（redirect: '/404'）
   try {
     target.removeRoute(CATCH_ALL_NAME)
   } catch {

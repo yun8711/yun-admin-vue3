@@ -34,6 +34,7 @@ let _warnedOutsideQiankun = false
 /** 空实现，独立运行时兜底 */
 const emptyAction = (): void => {
   if (!_warnedOutsideQiankun) {
+    // eslint-disable-next-line no-console
     console.warn('[qiankun] 当前不在 qiankun 子应用环境中，actions 为空操作')
     _warnedOutsideQiankun = true
   }

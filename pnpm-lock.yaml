@@ -12,17 +12,20 @@ importers:
         specifier: ^2.3.2
         version: 2.3.2(vue@3.5.38(typescript@6.0.3))
       '@voerkai18n/runtime':
-        specifier: ^3.0.22
-        version: 3.0.22
+        specifier: ^2.1.13
+        version: 2.1.13
       '@voerkai18n/vue':
-        specifier: ^3.0.22
-        version: 3.0.22(@voerkai18n/runtime@3.0.22)(typescript@6.0.3)
+        specifier: ^2.1.13
+        version: 2.1.13(@voerkai18n/runtime@2.1.13)(vue@3.5.38(typescript@6.0.3))
       '@vueuse/core':
         specifier: ^14.3.0
         version: 14.3.0(vue@3.5.38(typescript@6.0.3))
       axios:
         specifier: ^1.18.1
         version: 1.18.1
+      echarts:
+        specifier: ^6.1.0
+        version: 6.1.0
       element-plus:
         specifier: ^2.14.2
         version: 2.14.2(vue@3.5.38(typescript@6.0.3))
@@ -39,8 +42,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(@vue/compiler-sfc@3.5.38)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))(rolldown@1.1.2)(vite@8.1.0(@types/node@26.0.0)(jiti@2.7.0)(sass@1.101.0)(yaml@2.9.0))(vue@3.5.38(typescript@6.0.3))
       yun-elp:
-        specifier: ^1.6.0
-        version: 1.6.0(element-plus@2.14.2(vue@3.5.38(typescript@6.0.3)))(lodash-es@4.18.1)(vue-router@5.1.0(@vue/compiler-sfc@3.5.38)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))(rolldown@1.1.2)(vite@8.1.0(@types/node@26.0.0)(jiti@2.7.0)(sass@1.101.0)(yaml@2.9.0))(vue@3.5.38(typescript@6.0.3)))(vue@3.5.38(typescript@6.0.3))
+        specifier: ^1.8.0
+        version: 1.8.0(element-plus@2.14.2(vue@3.5.38(typescript@6.0.3)))(lodash-es@4.18.1)(vue-router@5.1.0(@vue/compiler-sfc@3.5.38)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))(rolldown@1.1.2)(vite@8.1.0(@types/node@26.0.0)(jiti@2.7.0)(sass@1.101.0)(yaml@2.9.0))(vue@3.5.38(typescript@6.0.3)))(vue@3.5.38(typescript@6.0.3))
     devDependencies:
       '@commitlint/cli':
         specifier: ^21.1.0
@@ -1203,19 +1206,17 @@ packages:
   '@voerkai18n/runtime@2.1.13':
     resolution: {integrity: sha512-eVjbULaeW9amOeeHG3NSdYA842iJna0aUeubLjoTqBxV0y2Srs4A62qgHQLs+R7TaOTW81nO5olMLYYwBmDzTw==}
 
-  '@voerkai18n/runtime@3.0.22':
-    resolution: {integrity: sha512-8V0bpwhUsRI4e/LRi9N1w5j+kJF3UVs0aWs+QyC3BzhimIHjWcRR7FCqFT2HzLWAXwaI2uTMePm2qk7LafEImg==}
-
   '@voerkai18n/utils@2.1.13':
     resolution: {integrity: sha512-7rVhod1u432bHj7AnJZlmXbjxJZpu/u4gpWLkhxE9FA4E3WrDZjRuEtHuVUrJ1XDSH0/zy4Np2WyLv69U0s+lw==}
 
   '@voerkai18n/vite@2.1.13':
     resolution: {integrity: sha512-BOOOw0Lp2pQ0oSEHZD55nfAVE9DqtwGUdQKR3bmRDAzYYiI1i8fnSd6lZxZHcJ8KOMbmxNNomK1e1k/GrDr7dQ==}
 
-  '@voerkai18n/vue@3.0.22':
-    resolution: {integrity: sha512-pgM8ZRd4gVf/x1aAdjR03LWDlbVkdys6vDmHe06uRiLJDo2bsXWPsB6+8K5phSTyQkWzYT1USGoxdmNRbexGFg==}
+  '@voerkai18n/vue@2.1.13':
+    resolution: {integrity: sha512-bUsijMgaKJLexSN8cQIDfBklNiSzqVSN6LRhe4Kv4e6pfwnz5LGOF+kaAxPh3W09ulHt7zhST/PobrvRLjuo9w==}
     peerDependencies:
-      '@voerkai18n/runtime': 3.0.22
+      '@voerkai18n/runtime': ^2.1.13
+      vue: ^3.0.0
 
   '@volar/language-core@2.4.28':
     resolution: {integrity: sha512-w4qhIJ8ZSitgLAkVay6AbcnC7gP3glYM3fYwKV3srj8m494E3xtrCv6E+bWviiK/8hs6e6t1ij1s2Endql7vzQ==}
@@ -1484,9 +1485,6 @@ packages:
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
-
-  asyncsignal@0.0.5:
-    resolution: {integrity: sha512-r0ATOzHqg/q7lazhg98dqNVFgy2wQW6bCjS1/zqQ2wXTfDYbhja7KImemqGHpfLNbwXyJlMySGR4zu1x4nEV1w==}
 
   atob@2.1.2:
     resolution: {integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==}
@@ -2316,9 +2314,6 @@ packages:
 
   flex-tools@1.6.4:
     resolution: {integrity: sha512-rAHSldJXvt824HlwQ1jYvhPOVfRQvgmu6nJL5wsz5IPHZzfuH05FKWIRhdxiiCgNYDL+w76KnHFXzvKsfH6Veg==}
-
-  flexvars@1.0.9:
-    resolution: {integrity: sha512-c35vaNGSbP+E55HXNmt+6cxArYI+QGKVshXFKZHHe2TswpOBzBxCiBl0vfI1Y52ZdXd0DoeWtOBzRcaQ6DxaNA==}
 
   flush-write-stream@1.1.1:
     resolution: {integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==}
@@ -4292,9 +4287,6 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  ts-mixer@6.0.4:
-    resolution: {integrity: sha512-ufKpbmrugz5Aou4wcr5Wc1UUFWOLhq+Fm6qa6P0w0K5Qw2yhaUoiWszhCVuNQyNwrlGiscHOmqYoAox1PtvgjA==}
-
   tslib@2.3.0:
     resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
 
@@ -4749,8 +4741,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  yun-elp@1.6.0:
-    resolution: {integrity: sha512-/vyDCziTb/kZVgDA2GTUxvSt/FM2TYa4QFVGuNHjEpJuQdY+lyt4Lr4FzkhC48xhWS6jyhLDbb3tsn47Cdf5bw==}
+  yun-elp@1.8.0:
+    resolution: {integrity: sha512-MR9eHdSd6yUc/AGF+cv5Afkzb0x6qiNcONrjTghQH+Jr4aD9Qv2YeT27tI4A3kwN6jj7lElNsKedUXAwb4rx+Q==}
     peerDependencies:
       element-plus: ^2.14.0
       lodash-es: ^4.17.21
@@ -5852,13 +5844,6 @@ snapshots:
     dependencies:
       flex-tools: 1.6.4
 
-  '@voerkai18n/runtime@3.0.22':
-    dependencies:
-      asyncsignal: 0.0.5
-      flex-tools: 1.6.4
-      flexvars: 1.0.9
-      ts-mixer: 6.0.4
-
   '@voerkai18n/utils@2.1.13':
     dependencies:
       fs-extra: 10.1.0
@@ -5870,13 +5855,10 @@ snapshots:
     dependencies:
       '@voerkai18n/utils': 2.1.13
 
-  '@voerkai18n/vue@3.0.22(@voerkai18n/runtime@3.0.22)(typescript@6.0.3)':
+  '@voerkai18n/vue@2.1.13(@voerkai18n/runtime@2.1.13)(vue@3.5.38(typescript@6.0.3))':
     dependencies:
-      '@voerkai18n/runtime': 3.0.22
-      flex-tools: 1.6.4
+      '@voerkai18n/runtime': 2.1.13
       vue: 3.5.38(typescript@6.0.3)
-    transitivePeerDependencies:
-      - typescript
 
   '@volar/language-core@2.4.28':
     dependencies:
@@ -6196,8 +6178,6 @@ snapshots:
   async@3.2.6: {}
 
   asynckit@0.4.0: {}
-
-  asyncsignal@0.0.5: {}
 
   atob@2.1.2: {}
 
@@ -6781,7 +6761,6 @@ snapshots:
     dependencies:
       tslib: 2.3.0
       zrender: 6.1.0
-    optional: true
 
   electron-to-chromium@1.5.381: {}
 
@@ -7239,10 +7218,6 @@ snapshots:
       fastevent: 2.5.1
       glob: 13.0.6
       semver: 7.8.5
-
-  flexvars@1.0.9:
-    dependencies:
-      flex-tools: 1.6.4
 
   flush-write-stream@1.1.1:
     dependencies:
@@ -9399,10 +9374,7 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  ts-mixer@6.0.4: {}
-
-  tslib@2.3.0:
-    optional: true
+  tslib@2.3.0: {}
 
   tslib@2.8.1:
     optional: true
@@ -9956,7 +9928,7 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  yun-elp@1.6.0(element-plus@2.14.2(vue@3.5.38(typescript@6.0.3)))(lodash-es@4.18.1)(vue-router@5.1.0(@vue/compiler-sfc@3.5.38)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))(rolldown@1.1.2)(vite@8.1.0(@types/node@26.0.0)(jiti@2.7.0)(sass@1.101.0)(yaml@2.9.0))(vue@3.5.38(typescript@6.0.3)))(vue@3.5.38(typescript@6.0.3)):
+  yun-elp@1.8.0(element-plus@2.14.2(vue@3.5.38(typescript@6.0.3)))(lodash-es@4.18.1)(vue-router@5.1.0(@vue/compiler-sfc@3.5.38)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))(rolldown@1.1.2)(vite@8.1.0(@types/node@26.0.0)(jiti@2.7.0)(sass@1.101.0)(yaml@2.9.0))(vue@3.5.38(typescript@6.0.3)))(vue@3.5.38(typescript@6.0.3)):
     dependencies:
       element-plus: 2.14.2(vue@3.5.38(typescript@6.0.3))
       lodash-es: 4.18.1
@@ -9969,4 +9941,3 @@ snapshots:
   zrender@6.1.0:
     dependencies:
       tslib: 2.3.0
-    optional: true

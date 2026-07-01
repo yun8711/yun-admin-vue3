@@ -37,7 +37,7 @@ declare module 'vue-router' {
     title?: string
     /** 权限标识；无则该路由始终可用 */
     menuKey?: string
-    /** UnoCSS 图标类名，例如 i-ep-setting */
+    /** UnoCSS 支持的图标类名，例如 i-ep-setting，i-fill-avatar_man */
     icon?: string
     /** 是否在侧边栏隐藏 */
     hidden?: boolean

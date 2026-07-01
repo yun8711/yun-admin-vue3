@@ -1,6 +1,6 @@
 // @ts-expect-error build-time loader path from @iconify/utils
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
-import presetRemToPx from '@unocss/preset-rem-to-px'
+// import presetRemToPx from '@unocss/preset-rem-to-px'
 import {
   defineConfig,
   presetAttributify,
@@ -12,7 +12,7 @@ import {
 export default defineConfig({
   shortcuts: {
     // 不带page-header的页面
-    page: 'h-full p-8 box-border',
+    page: 'h-full p-8 pt-6 box-border',
     // 带page-header的页面
     'page-with-header': 'h-full p-8 pt-2 box-border',
     'flex-center': 'flex items-center justify-center',

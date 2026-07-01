@@ -12,9 +12,6 @@ module.exports = {
     { name: 'ja', title: '日本語' },
     { name: 'ar', title: 'العربية' },
   ],
-  // 翻译文件输出目录（相对于 entry）
-  // 实际输出到 src/i18n/
-  langDir: 'i18n',
   // 命名空间配置（可选，暂不启用）
   // namespaces: {},
   // 是否启用 TypeScript 类型生成

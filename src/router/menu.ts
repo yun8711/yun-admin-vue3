@@ -13,7 +13,8 @@ type RouteLike = RouteRecordRaw & {
 /** 拼接父子路径，子路径以 '/' 开头时视为绝对路径。 */
 export function joinPath(parentPath: string, path: string): string {
   if (path.startsWith('/')) return path
-  const merged = `${parentPath}/${path}`
+  // parentPath 可能为空（顶层路由），此时直接返回 path
+  const merged = parentPath ? `${parentPath}/${path}` : path
   return `/${merged}`.replace(/\/{2,}/g, '/')
 }
 
@@ -35,11 +36,29 @@ export function flattenAuthMenus(
 }
 
 /**
- * 过滤并合并异步路由：
- * - 保留条件：跳过权限 / 无 menuKey（始终可用）/ 命中后端权限；
- * - 合并 meta：菜单标题取后端 name，附带 btnList、serialNum；
- * - 递归处理子路由并按 serialNum 排序。
- * 返回过滤后的路由与全部完整路径列表。
+ * 递归遍历路由树，构建 name → 完整路径映射。
+ * 用于下钻页通过 meta.parent（父路由 name）自动推导 activeMenu。
+ */
+function buildNamePathMap(routes: RouteRecordRaw[], parentPath = ''): Map<string, string> {
+  const map = new Map<string, string>()
+  for (const route of routes as RouteLike[]) {
+    const fullPath = joinPath(parentPath, route.path)
+    if (route.name) {
+      map.set(route.name as string, fullPath)
+    }
+    if (route.children?.length) {
+      const childMap = buildNamePathMap(route.children, fullPath)
+      for (const [name, path] of childMap) {
+        map.set(name, path)
+      }
+    }
+  }
+  return map
+}
+
+/**
+ * 过滤并合并异步路由（公开入口）：
+ * 先构建 name → path 映射，再调用内部实现，自动填充 activeMenu。
  */
 export function filterAsyncRoutes(
   routes: RouteRecordRaw[],
@@ -47,15 +66,31 @@ export function filterAsyncRoutes(
   skip: boolean,
   parentPath = ''
 ): { routes: RouteRecordRaw[]; paths: string[] } {
+  // activeMenu 自动填充始终需要 name → path 映射，与是否跳过权限无关
+  const namePathMap = buildNamePathMap(routes)
+  return filterAsyncRoutesImpl(routes, authMap, skip, parentPath, namePathMap)
+}
+
+/**
+ * 递归遍历路由树进行权限过滤与 meta 合并。
+ * 未配置 activeMenu 但存在 parent 的下钻页，自动根据父路由 name 填充完整路径。
+ */
+function filterAsyncRoutesImpl(
+  routes: RouteRecordRaw[],
+  authMap: Map<string, AuthMenu>,
+  skip: boolean,
+  parentPath: string,
+  namePathMap: Map<string, string>
+): { routes: RouteRecordRaw[]; paths: string[] } {
   const result: RouteRecordRaw[] = []
   const paths: string[] = []
 
   for (const route of routes as RouteLike[]) {
     const fullPath = joinPath(parentPath, route.path)
-
     const menuKey = route.meta?.menuKey
     const auth = menuKey ? authMap.get(menuKey) : undefined
-    // 条件 1：配置了 menuKey 但后端未返回 → 无权限，不展示
+
+    // 权限过滤：配置 menuKey 但后端未返回 → 跳过
     const accessible = skip || !menuKey || Boolean(auth)
     if (!accessible) continue
 
@@ -71,7 +106,10 @@ export function filterAsyncRoutes(
         isMenu,
         title: isMenu && auth?.name ? auth.name : route.meta?.title,
         icon: route.meta?.icon, // 图标始终取本地，不与后端合并
-        activeMenu: route.meta?.activeMenu ?? '',
+        // activeMenu 自动填充：已手动配置则保留，否则按 parent 查找父路由完整路径
+        activeMenu:
+          route.meta?.activeMenu ||
+          (route.meta?.parent ? (namePathMap.get(route.meta.parent) ?? '') : ''),
         btnList: auth?.btnList ?? route.meta?.btnList ?? [],
         serialNum: auth?.serialNum ?? route.meta?.serialNum ?? 0,
         menuKey: route.meta?.menuKey,
@@ -84,7 +122,7 @@ export function filterAsyncRoutes(
     // 递归处理子路由
     let childResult: { routes: RouteRecordRaw[]; paths: string[] } | null = null
     if (route.children?.length) {
-      childResult = filterAsyncRoutes(route.children, authMap, skip, fullPath)
+      childResult = filterAsyncRoutesImpl(route.children, authMap, skip, fullPath, namePathMap)
       merged.children = childResult.routes
 
       // 未显式指定 redirect 则自动指向第一个子路由
@@ -93,7 +131,7 @@ export function filterAsyncRoutes(
       }
     }
 
-    // 条件 2：子路由全部被过滤掉，且父路由无 component 无 redirect → 不展示
+    // 条件 2：子路由全部被过滤，且父路由无 component 无 redirect → 不展示
     if (childResult && childResult.routes.length === 0 && !merged.component && !merged.redirect) {
       continue
     }

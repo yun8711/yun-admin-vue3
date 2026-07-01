@@ -6,17 +6,19 @@
 
 ## 技术栈
 
-- Vue `3.5.38`
-- TypeScript `~6.0.3`
-- Vite `8.0.16`
-- Vue Router `4.6.4`
-- Pinia `3.0.4`
-- Element Plus `2.14.2`
-- `yun-elp` `1.2.2`
-- SCSS / Sass `1.101.0`
-- UnoCSS `66.7.2`
-- VueUse `14.3.0`
-- Axios `1.18.1`
+- [Vue](https://cn.vuejs.org/) `3.5.38`
+- [TypeScript](https://www.typescriptlang.org/) `~6.0.3`
+- [Vite](https://cn.vitejs.dev/) `8.1.0`
+- [Vue Router](https://router.vuejs.org/zh/) `5.1.0`
+- [Pinia](https://pinia.vuejs.org/zh/) `3.0.4`
+- [Element Plus](https://element-plus.org/zh-CN/) `2.14.2`
+- [yun-elp](https://yun8711.github.io/yun-elp/) `1.8.0`
+- SCSS / [Sass](https://sass-lang.com/) `1.101.0`
+- [UnoCSS](https://unocss.dev/) `66.7.2`
+- [VueUse](https://vueuse.org/) `14.3.0`
+- [Axios](https://axios-http.com/) `1.18.1`
+- [ECharts](https://echarts.apache.org/) `6.1.0`
+- [VoerkaI18n](https://zhangfisher.github.io/voerka-i18n/) `2.1.13`
 
 ## 环境要求
 
@@ -76,11 +78,11 @@ src/
 
 ## 开发说明
 
-- 代码检查：ESLint + Oxlint
+- 代码检查：[ESLint](https://eslint.org/)
 - 类型检查：Vue TSC
-- 代码格式化：Oxfmt
-- 样式检查：Stylelint
-- 提交校验：Husky + lint-staged + Commitlint
+- 代码格式化：[oxfmt](https://oxc.rs/)
+- 样式检查：[Stylelint](https://stylelint.io/)
+- 提交校验：[Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) + [Commitlint](https://commitlint.js.org/)
 
 更偏向项目内部协作和 AI 约束的规则，见 [AGENTS.md](./AGENTS.md)。
 

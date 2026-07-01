@@ -58,7 +58,10 @@ export default defineConfig(({ command, mode }) => {
   }
 
   return {
-    base: env.VITE_QIANKUN_ENABLED === 'true' && command === 'serve' ? '/' : '/subapp/rhea/',
+    base:
+      env.VITE_QIANKUN_ENABLED === 'true' && command === 'serve'
+        ? '/'
+        : env.VITE_APP_SUBAPP_BASE || '/subapp/rhea/',
     plugins: [
       vue(),
       // qiankun 子应用模式：仅 VITE_QIANKUN_ENABLED=true 时启用
@@ -149,7 +152,11 @@ export default defineConfig(({ command, mode }) => {
                 changeOrigin: true,
                 rewrite: (path: string) => {
                   // /subapp/rhea 或 /subapp/rhea/ -> /（HTML entry，由 Vite 返回 index.html）
-                  if (path === '/subapp/rhea' || path === '/subapp/rhea/') return '/'
+                  if (
+                    path === '/subapp/rhea' ||
+                    path === (env.VITE_APP_SUBAPP_BASE || '/subapp/rhea/')
+                  )
+                    return '/'
                   // /subapp/@vite/client -> /@vite/client 等模块资源
                   return path.replace(/^\/subapp/, '')
                 },

@@ -54,7 +54,7 @@ import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { useLocale } from '@/composables/useLocale'
-import type { SupportedLang } from '@/i18n'
+import type { SupportedLang } from '@/languages/settings'
 import type { MenuNode } from '@/router/types'
 import { usePermissionStore } from '@/stores/permission'
 import { useUserStore } from '@/stores/user'

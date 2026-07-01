@@ -37,8 +37,11 @@ export default tseslint.config(
       },
     },
     rules: {
+      // eslint规则说明参见：https://eslint.bootcss.com/docs/rules/
       'no-console': 'warn',
       'no-debugger': 'error',
+      // 最多一行空行
+      'no-multiple-empty-lines': ['warn', { max: 1 }],
       // _ 前缀变量/参数视为有意未使用，不报 unused-vars
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -48,6 +51,7 @@ export default tseslint.config(
           caughtErrorsIgnorePattern: '^_',
         },
       ],
+      // eslint-plugin-vue规则，参见： https://eslint.vuejs.org/rules/
       // Vue 模板中同样忽略 _ 前缀的未使用变量（如 slot props 重命名）
       'vue/no-unused-vars': ['error', { ignorePattern: '^_' }],
       // Vue 单文件组件块顺序：template -> script -> style
@@ -58,8 +62,16 @@ export default tseslint.config(
       'vue/multi-word-component-names': ['error', { ignores: ['index', '404', 'default'] }],
       // 单行内容不强制换行（与 oxfmt 格式化风格兼容）
       'vue/singleline-html-element-content-newline': 'off',
-      // 交给 oxfmt 决定属性换行，避免与 eslint 规则冲突
-      'vue/max-attributes-per-line': 'off',
+      // 元素有多属性时每行属性数量，单行时一行最多个，多行时每行1个，
+      'vue/max-attributes-per-line': [
+        'error',
+        {
+          singleline: 10,
+          multiline: {
+            max: 1,
+          },
+        },
+      ],
     },
   },
   // TS/TSX 文件：TypeScript 解析器

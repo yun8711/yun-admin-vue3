@@ -8,10 +8,11 @@ import {
 } from 'vite-plugin-qiankun/dist/helper'
 import { createApp } from 'vue'
 
+import { i18nScope } from '@/languages'
+
 import 'uno.css'
-import '@/assets/iconfont/iconfont.css'
-import '@/styles/index.scss'
 import 'yun-elp/themes/kd.scss'
+import '@/styles/index.scss'
 import App from './App.vue'
 import { setQiankunActions } from './composables/useQiankunActions'
 import router from './router'
@@ -30,8 +31,7 @@ function render(props: QiankunProps = {}) {
 
   app = createApp(App)
   app.use(createPinia())
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  app.use(i18nPlugin as any)
+  app.use(i18nPlugin, { i18nScope })
   app.use(router)
   app.mount(mountNode || '#app')
 }
@@ -42,7 +42,7 @@ if (qiankunWindow.__POWERED_BY_QIANKUN__) {
   renderWithQiankun({
     bootstrap() {
       // eslint-disable-next-line no-console
-      console.log('子应用【rhea】加载')
+      console.log('[qiankun] 子应用加载')
     },
     mount(props: QiankunProps) {
       // 注入主应用下发的 actions（onGlobalStateChange / setGlobalState）

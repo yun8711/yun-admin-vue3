@@ -7,6 +7,9 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue').EffectScope
+  const MAIN_SCROLL_KEY: typeof import('./composables/useMainScroll').MAIN_SCROLL_KEY
+  const PAGE_SCROLL_KEY: typeof import('./composables/usePageScroll').PAGE_SCROLL_KEY
+  const SIDEBAR_WIDTH_KEY: typeof import('./composables/useSidebarWidth').SIDEBAR_WIDTH_KEY
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
@@ -48,6 +51,9 @@ declare global {
   const ignorableWatch: typeof import('@vueuse/core').ignorableWatch
   const inject: typeof import('vue').inject
   const injectLocal: typeof import('@vueuse/core').injectLocal
+  const injectMainScroll: typeof import('./composables/useMainScroll').injectMainScroll
+  const injectPageScroll: typeof import('./composables/usePageScroll').injectPageScroll
+  const injectSidebarWidth: typeof import('./composables/useSidebarWidth').injectSidebarWidth
   const isDefined: typeof import('@vueuse/core').isDefined
   const isProxy: typeof import('vue').isProxy
   const isReactive: typeof import('vue').isReactive
@@ -217,6 +223,7 @@ declare global {
   const useLocalStorage: typeof import('@vueuse/core').useLocalStorage
   const useLocale: typeof import('./composables/useLocale').useLocale
   const useMagicKeys: typeof import('@vueuse/core').useMagicKeys
+  const useMainScroll: typeof import('./composables/useMainScroll').useMainScroll
   const useManualRefHistory: typeof import('@vueuse/core').useManualRefHistory
   const useMediaControls: typeof import('@vueuse/core').useMediaControls
   const useMediaQuery: typeof import('@vueuse/core').useMediaQuery
@@ -235,6 +242,7 @@ declare global {
   const useOffsetPagination: typeof import('@vueuse/core').useOffsetPagination
   const useOnline: typeof import('@vueuse/core').useOnline
   const usePageLeave: typeof import('@vueuse/core').usePageLeave
+  const usePageScroll: typeof import('./composables/usePageScroll').usePageScroll
   const useParallax: typeof import('@vueuse/core').useParallax
   const useParentElement: typeof import('@vueuse/core').useParentElement
   const usePerformanceObserver: typeof import('@vueuse/core').usePerformanceObserver
@@ -326,26 +334,11 @@ declare global {
 // for type re-export
 declare global {
   // @ts-ignore
-  export type {
-    Component,
-    Slot,
-    Slots,
-    ComponentPublicInstance,
-    ComputedRef,
-    DirectiveBinding,
-    ExtractDefaultPropTypes,
-    ExtractPropTypes,
-    ExtractPublicPropTypes,
-    InjectionKey,
-    PropType,
-    Ref,
-    ShallowRef,
-    MaybeRef,
-    MaybeRefOrGetter,
-    VNode,
-    WritableComputedRef,
-  } from 'vue'
+  export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { ScrollPayload, PageScrollContext, UsePageScrollReturn } from './composables/usePageScroll'
+  import('./composables/usePageScroll')
   // @ts-ignore
   export type { QiankunGlobalState, QiankunActions } from './composables/useQiankunActions'
   import('./composables/useQiankunActions')

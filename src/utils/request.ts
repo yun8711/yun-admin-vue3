@@ -11,7 +11,7 @@ import { get, isPlainObject, isString, merge } from 'lodash-es'
 
 import { appRequestConfig, resolveRequestUrl } from '@/config/app'
 // import 'element-plus/es/components/message/style/css'
-import { getStoredLang } from '@/i18n'
+import { getStoredLang } from '@/languages/settings'
 import router from '@/router'
 import { useUserStore } from '@/stores/user'
 

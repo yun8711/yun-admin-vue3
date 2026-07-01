@@ -9,8 +9,14 @@
  */
 import { computed, ref } from 'vue'
 
-import { getLangDir, getStoredLang, LANG_STORAGE_KEY, LANGUAGES, type SupportedLang } from '@/i18n'
-import i18nScope from '@/i18n'
+import { i18nScope } from '@/languages'
+import {
+  getLangDir,
+  getStoredLang,
+  LANG_STORAGE_KEY,
+  LANGUAGES,
+  type SupportedLang,
+} from '@/languages/settings'
 
 /**
  * SupportedLang → yun-elp locale 字符串映射

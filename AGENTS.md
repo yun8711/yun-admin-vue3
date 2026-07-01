@@ -5,7 +5,7 @@
 ## 目标
 
 - 这是一个 Vue 3 后台模板项目，不是业务成品。
-- 新增内容应优先保持“可复用、可扩展、易二次开发”。
+- 新增内容应优先保持"可复用、可扩展、易二次开发"。
 - 避免把强业务语义、品牌信息或一次性页面逻辑固化进模板。
 
 ## 技术基线
@@ -17,6 +17,24 @@
 - Axios
 - Node.js >= 20
 - 包管理器固定为 `pnpm`
+
+### 库文档链接
+
+| 库                   | 文档                                                                              |
+| -------------------- | --------------------------------------------------------------------------------- |
+| Vue 3                | https://cn.vuejs.org/                                                             |
+| TypeScript           | https://www.typescriptlang.org/                                                   |
+| Vite                 | https://cn.vitejs.dev/                                                            |
+| Vue Router           | https://router.vuejs.org/zh/                                                      |
+| Pinia                | https://pinia.vuejs.org/zh/                                                       |
+| Element Plus         | https://element-plus.org/zh-CN/                                                   |
+| yun-elp              | https://yun8711.github.io/yun-elp/                                                |
+| UnoCSS               | https://unocss.dev/                                                               |
+| Axios                | https://axios-http.com/                                                           |
+| VueUse               | https://vueuse.org/                                                               |
+| ECharts              | https://echarts.apache.org/                                                       |
+| lodash-es            | https://lodash.com/                                                               |
+| VoerkaI18n           | https://zhangfisher.github.io/voerka-i18n/                                        |
 
 ### yun-elp
 

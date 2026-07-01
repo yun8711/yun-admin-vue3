@@ -28,3 +28,7 @@ dist-ssr
 .env.*.local
 
 tsconfig.tsbuildinfo
+
+# VoerkaI18n 辅助文件（不提交）
+voerkai18n_progress
+voerkai18n_literal_hits.txt

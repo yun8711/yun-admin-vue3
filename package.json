@@ -22,16 +22,17 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
-    "@voerkai18n/runtime": "^3.0.22",
-    "@voerkai18n/vue": "^3.0.22",
+    "@voerkai18n/runtime": "^2.1.13",
+    "@voerkai18n/vue": "^2.1.13",
     "@vueuse/core": "^14.3.0",
     "axios": "^1.18.1",
+    "echarts": "^6.1.0",
     "element-plus": "^2.14.2",
     "lodash-es": "^4.18.1",
     "pinia": "^3.0.4",
     "vue": "^3.5.38",
     "vue-router": "^5.1.0",
-    "yun-elp": "^1.6.0"
+    "yun-elp": "^1.8.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.1.0",

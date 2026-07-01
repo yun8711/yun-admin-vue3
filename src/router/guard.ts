@@ -108,7 +108,8 @@ function handleBreadcrumb(
   const list: { path: string; title: string }[] = []
 
   if (firstHiddenIdx !== -1) {
-    for (let i = Math.max(0, firstHiddenIdx - 1); i < to.matched.length; i++) {
+    // 从 index 1 开始遍历，跳过 Root 路由，收集所有祖先与当前路由
+    for (let i = 1; i < to.matched.length; i++) {
       const record = to.matched[i]
       if (record.meta?.breadcrumb !== false) {
         list.push({ path: record.path, title: (record.meta?.title as string) || '' })

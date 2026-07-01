@@ -1,6 +1,6 @@
 <template>
   <y-app-wrap
-    :page-header="{ paddingX: '0', titleTextStyle: { 'font-size': '16px' } }"
+    :page-header="{ paddingX: '0', textStyle: { fontSize: '16px' } }"
     :empty="{ image: EmptyPlaceholerImage }"
     :locale="elLocaleString"
     :elp-config="{ namespace: 'ep' }"

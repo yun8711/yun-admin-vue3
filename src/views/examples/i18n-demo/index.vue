@@ -20,9 +20,7 @@
       <template #header>
         <span class="font-medium">{{ t('变量插值') }}</span>
       </template>
-      <p class="text-sm text-gray-500 mb-2">
-        t('你好，{"{name}"}！', {"{"} name: 'VoerkaI18n' {"}"})
-      </p>
+      <p class="text-sm text-gray-500 mb-2">t('你好，{name}！', { name: 'VoerkaI18n' })</p>
       <el-tag>{{ t('你好，{name}！', { name: 'VoerkaI18n' }) }}</el-tag>
     </el-card>
 
@@ -69,12 +67,11 @@
 </template>
 
 <script setup lang="ts" name="I18nDemoPage">
-import { useVoerkaI18n } from '@voerkai18n/vue'
 import { ref } from 'vue'
 
 import { useLocale } from '@/composables/useLocale'
+import { t } from '@/languages'
 
-const { t } = useVoerkaI18n()
 const { activeLanguage, languages } = useLocale()
 
 // 复数示例计数器

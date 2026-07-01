@@ -1,9 +1,9 @@
 {
-    "languages": [
-        { "name": "zh-CN", "title": "中文", "default": true, "active": true },
-        { "name": "en", "title": "English" },
-        { "name": "ja", "title": "日本語" },
-        { "name": "ar", "title": "العربية" }
-    ],
-    "namespaces": {}
+  "languages": [
+    { "name": "zh-CN", "title": "中文", "default": true, "active": true },
+    { "name": "en", "title": "English" },
+    { "name": "ja", "title": "日本語" },
+    { "name": "ar", "title": "العربية" }
+  ],
+  "namespaces": {}
 }

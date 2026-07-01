@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { useVoerkaI18n } from '@voerkai18n/vue'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { t } from '@/languages'
 import type { MenuNode } from '@/router/types'
 
 import SidebarItem from './SidebarItem.vue'
@@ -73,7 +73,6 @@ const emit = defineEmits<{
   'update:visible': [value: boolean]
 }>()
 
-const { t } = useVoerkaI18n()
 const router = useRouter()
 
 // 合并默认层级缩进与用户传入的缩进覆盖

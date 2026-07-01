@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { useVoerkaI18n } from '@voerkai18n/vue'
 import { useRouter } from 'vue-router'
 
-const { t } = useVoerkaI18n()
+import { t } from '@/languages'
+
 const router = useRouter()
 
 function goHome() {

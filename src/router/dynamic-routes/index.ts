@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import exampleRoutes from './example'
-import homrRoutes from './home'
+import homeRoutes from './home'
 import modelRoutes from './model'
 
-export const asyncRoutes: RouteRecordRaw[] = [exampleRoutes, homrRoutes, modelRoutes]
+export const asyncRoutes: RouteRecordRaw[] = [exampleRoutes, homeRoutes, modelRoutes]
