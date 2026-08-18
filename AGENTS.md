@@ -38,7 +38,50 @@
 
 ### yun-elp
 
-yun-elp 是一个基于 element-plus 二次封装的业务组件库，提供了yun-elp-mcp代本地查询组件信息，还提供了在线的：[官方文档](https://yun8711.github.io/yun-elp/)、[llms.txt](https://yun8711.github.io/yun-elp/llms.txt)、[llms-full.txt](https://yun8711.github.io/yun-elp/llms-full.txt)、[components.json](https://yun8711.github.io/yun-elp/metadata/components.json)、[sitemap.xml](https://yun8711.github.io/yun-elp/sitemap.xml) 以便查询。
+yun-elp 是基于 Element Plus 的业务组件库。工程内通过 `YunElpResolver` 自动导入；组件标签使用 `y-` 前缀。完整 AI 接入说明见官方：[AI 使用指南](https://yun8711.github.io/yun-elp/guide/ai-usage)。
+
+#### 在线机器可读资源（无需安装）
+
+| 资源 | 地址 |
+| ---- | ---- |
+| 文档站 | https://yun8711.github.io/yun-elp/ |
+| `llms.txt` | https://yun8711.github.io/yun-elp/llms.txt |
+| `llms-full.txt` | https://yun8711.github.io/yun-elp/llms-full.txt |
+| `components.json` | https://yun8711.github.io/yun-elp/metadata/components.json |
+| `sitemap.xml` | https://yun8711.github.io/yun-elp/sitemap.xml |
+
+#### 可选辅助工具（自行决定是否配置）
+
+以下工具**不是**本模板的运行时依赖，不装也能正常开发；配置后 AI 可更准确查询组件 API 与示例。
+
+**1. MCP（推荐）**：独立包 `yun-elp-mcp`，用 `npx` 按需拉取，不必写入本仓库 `package.json`。
+
+```json
+{
+  "mcpServers": {
+    "yun-elp": {
+      "command": "npx",
+      "args": ["-y", "yun-elp-mcp"]
+    }
+  }
+}
+```
+
+| IDE | 配置方式 |
+| ---- | -------- |
+| Cursor | `Cursor Settings → MCP` 添加上述配置；或写入项目 `.cursor/mcp.json` / 全局 `~/.cursor/mcp.json` |
+| Claude Code | `claude mcp add --scope user yun-elp -- npx -y yun-elp-mcp` |
+| Codex | `codex mcp add yun-elp -- npx -y yun-elp-mcp`，或写入 `~/.codex/config.toml` / `.codex/config.toml` |
+
+常用工具：`list_components`、`search_components`、`get_component`、`get_component_examples`。
+
+**2. Cursor Docs（仅 Cursor，可选）**：`Cursor Settings → Features → Docs → Add new doc`，优先加 `llms.txt`；需要更全摘要时再加 `llms-full.txt` 或文档站首页。索引完成后在对话中 `@Docs` 引用。
+
+#### Agent 使用约定
+
+- 写 yun-elp 代码前，若已配置 MCP，优先通过 MCP 查 Props / Events / Slots / 示例，勿凭记忆猜测 API。
+- 未配置 MCP 时，可读取上述在线资源或人工文档；不要把未文档化的 API 写进模板代码。
+- 基础能力继续用 `el-*`；仅在有业务封装时使用 `y-*`。
 
 ## 代码质量工具
 
