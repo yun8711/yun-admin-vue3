@@ -97,7 +97,7 @@ yun-elp 是基于 Element Plus 的业务组件库。工程内通过 `YunElpResol
 ## 目录职责
 
 - `src/views`: 页面级视图。按路由或业务模块分目录，页面入口文件优先使用 `index.vue`。
-- `src/layouts`: 全局布局，如后台主布局、空白布局。
+- `src/layouts`: 全局布局。每种布局单独一个二级目录，入口为该目录下的 `index.vue`；该布局专用的子组件放在同目录的 `components/` 中，不与其他布局混放。
 - `src/router`: 路由定义与路由层组织。
 - `src/stores`: Pinia store。放可复用的全局状态，不把临时页面状态硬塞进 store。
 - `src/api`: 接口函数封装。与页面解耦，不在页面中直接拼接大量请求逻辑。

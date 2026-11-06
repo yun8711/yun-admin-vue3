@@ -1,6 +1,6 @@
 import type { RouteMeta, RouteRecordRaw } from 'vue-router'
 
-import type { AuthMenu, MenuNode } from './types'
+import type { AuthMenu, MenuNode } from '@/types/router'
 
 // 路由记录的宽松视图，方便在过滤/合并时读取通用字段。
 type RouteLike = RouteRecordRaw & {

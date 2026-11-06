@@ -55,9 +55,9 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { useLocale } from '@/composables/useLocale'
 import type { SupportedLang } from '@/languages/settings'
-import type { MenuNode } from '@/router/types'
 import { usePermissionStore } from '@/stores/permission'
 import { useUserStore } from '@/stores/user'
+import type { MenuNode } from '@/types/router'
 
 const route = useRoute()
 const router = useRouter()
@@ -137,7 +137,7 @@ function onCommand(command: string) {
   flex-shrink: 0;
   box-sizing: border-box;
   height: 50px;
-  border-bottom: 1px solid var(--el-border-color-light);
+  border-bottom: 1px solid var(--ep-border-color-light);
 }
 
 /* 一级导航菜单：扁平化 el-menu 外观，融入 header */

@@ -8,7 +8,15 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
     "types": ["vite/client"]
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "vite.custom.ts",
+    "package.json",
+    "uno.config.ts",
+    "eslint.config.ts"
+  ]
 }

@@ -6,6 +6,7 @@
     :elp-config="{ namespace: 'ep' }"
     y-namespace="yp"
   >
+    <y-page-progress v-model="pageProgressVisible" />
     <router-view :key="viewKey" />
   </y-app-wrap>
 </template>
@@ -16,6 +17,7 @@ import { useRouter, useRoute } from 'vue-router'
 
 import EmptyPlaceholerImage from '@/assets/images/basic/empty.png'
 import { useLocale } from '@/composables/useLocale'
+import { usePageProgress } from '@/composables/usePageProgress'
 // 主应用消息通信
 import { onGlobalStateChange, receiveMessage, hasProperty } from '@/composables/useQiankunActions'
 import { addDynamicRoutes, resetDynamicRoutes } from '@/router'
@@ -30,6 +32,7 @@ const permissionStore = usePermissionStore()
 
 // yun-elp locale 字符串，Element Plus locale 由 y-app-wrap 内部管理
 const { elLocaleString } = useLocale()
+const { visible: pageProgressVisible, sync: syncPageProgress } = usePageProgress()
 
 /** 租户切换后用于强制刷新 router-view */
 const viewKey = ref(0)
@@ -68,6 +71,8 @@ async function handleTenantReload(): Promise<void> {
 }
 
 onMounted(() => {
+  void syncPageProgress()
+
   // 监听主应用全局状态下发
   onGlobalStateChange(state => {
     // tabPrefix：浏览器标签页前缀

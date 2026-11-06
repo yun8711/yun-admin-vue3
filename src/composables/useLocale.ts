@@ -10,6 +10,7 @@
 import { computed, ref } from 'vue'
 
 import { i18nScope } from '@/languages'
+import { i18nRevision } from '@/languages/revision'
 import {
   getLangDir,
   getStoredLang,
@@ -48,8 +49,9 @@ async function changeLanguage(lang: SupportedLang): Promise<void> {
   // 1. 切换 VoerkaI18n 作用域
   await i18nScope.change(lang)
 
-  // 2. 更新响应式状态
+  // 2. 更新响应式状态（i18nRevision 让模板 t() 所在子组件重新渲染）
   currentLang.value = lang
+  i18nRevision.value += 1
   dir.value = getLangDir(lang)
 
   // 3. 设置 <html dir> 属性实现 RTL

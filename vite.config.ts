@@ -1,16 +1,144 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 
 import vue from '@vitejs/plugin-vue'
 import { codeInspectorPlugin } from 'code-inspector-plugin'
+import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import ElementPlus from 'unplugin-element-plus/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 // @see https://www.npmjs.com/package/vite-plugin-qiankun
 import qiankun from 'vite-plugin-qiankun'
 import { YunElpResolver } from 'yun-elp/resolver'
+
+import { appConfig, requestConfig } from './vite.custom.ts'
+
+export default defineConfig(() => {
+  const { host, port } = appConfig
+  const prefixEntries = requestConfig.apiPrefixes.flatMap(item => {
+    const prefix = item.prefix.trim().replace(/^\//, '')
+    if (!prefix) return []
+    return [{ prefix, port: item.port?.trim() || '' }]
+  })
+
+  return {
+    // 基础配置（共享配置）
+    base: appConfig.base,
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
+      dedupe: ['vue', 'element-plus', 'vue-router'],
+    },
+    // CSS 预处理器配置
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+          @use "element-plus/theme-chalk/src/mixins/config.scss" as element-config with ($namespace: "ep");
+          @use "yun-elp/theme-chalk/src/mixins/config.scss" as yun-config with ($namespace: "yp");
+        `,
+        },
+      },
+    },
+
+    // 插件配置
+    plugins: [
+      {
+        name: 'app-title',
+        transformIndexHtml(html: string) {
+          return html.replaceAll('%APP_TITLE%', appConfig.title)
+        },
+      },
+      vue(),
+
+      // 子应用名必须与主应用注册时的 name 一致
+      qiankun(appConfig.name, { useDevMode: appConfig.isDev }),
+      // codeInspectorPlugin只在开发环境（不含 preview）
+      // command === 'serve' && isPreview !== true ? codeInspectorPlugin({ bundler: 'vite' }) : null,
+      codeInspectorPlugin({
+        bundler: 'vite',
+      }),
+      // 与 importStyle: 'sass' 对齐
+      ElementPlus({ useSource: true }),
+      AutoImport({
+        imports: ['vue', 'vue-router', 'pinia', '@vueuse/core'],
+        resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
+        dirs: ['src/composables'],
+        dts: 'src/types/auto-imports.d.ts',
+        eslintrc: { enabled: true },
+      }),
+      Components({
+        resolvers: [
+          ElementPlusResolver({ importStyle: 'sass' }),
+          YunElpResolver({ importStyle: 'scss', importElementStyle: 'sass' }),
+        ],
+        dirs: ['src/components'],
+        dts: 'src/types/components.d.ts',
+      }),
+      UnoCSS(),
+      visualizer(),
+    ],
+
+    // 开发服务器配置
+    server: {
+      host: '0.0.0.0',
+      port,
+      proxy: {
+        // 默认后端代理（/api 开头的请求）
+        '/api': {
+          target: host,
+          changeOrigin: true,
+        },
+        // 多后端前缀代理：/rhea_dev → host/rhea, /daas_dev → host/daas, ...
+        ...buildPrefixProxy(prefixEntries, host, requestConfig.devProxySuffix),
+      },
+    },
+
+    // 构建配置
+    build: {
+      rolldownOptions: {
+        checks: {
+          invalidAnnotation: false,
+          pluginTimings: false,
+        },
+        output: {
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return
+
+            if (id.includes('/echarts/') || id.includes('/zrender/')) return 'echarts'
+
+            // pnpm 路径为 @vue+runtime-core/.../@vue/...，不能用 '/vue/'
+            if (id.includes('/@vue/') || id.includes('/vue-router/') || id.includes('/pinia/'))
+              return 'framework'
+
+            if (id.includes('/@vueuse/')) return 'vueuse'
+
+            if (id.includes('/element-plus/') || id.includes('/@element-plus/'))
+              return 'element-plus'
+
+            if (id.includes('/yun-elp/')) {
+              return 'yun-elp'
+            }
+
+            if (id.includes('/axios/') || id.includes('/lodash-es/')) return 'utils'
+
+            return 'vendor'
+          },
+        },
+      },
+    },
+
+    // 预构建配置
+    optimizeDeps: {
+      include: ['yun-elp', 'yun-elp/echarts', 'element-plus/es', ...elementPlusStyleDeps()],
+    },
+  }
+})
 
 /**
  * 根据多前缀条目生成 Vite 代理配置，对应 rhea-fe 的 getProxy()。
@@ -18,13 +146,14 @@ import { YunElpResolver } from 'yun-elp/resolver'
  */
 function buildPrefixProxy(
   entries: { prefix: string; port: string }[],
-  host: string
+  host: string,
+  suffix: string
 ): Record<string, object> {
   return entries.reduce(
     (acc, { prefix, port }) => {
       // 独立端口场景：port 不为空时 target 使用 host:port，否则使用默认 host
-      const target = port ? `${host}:${port}` : host
-      const proxyKey = `/${prefix}_dev`
+      const target = port ? replacePort(host, port) : host
+      const proxyKey = `/${prefix}${suffix}`
       acc[proxyKey] = {
         target,
         changeOrigin: true,
@@ -37,133 +166,20 @@ function buildPrefixProxy(
   )
 }
 
-export default defineConfig(({ command, mode }) => {
-  // 配置文件运行在 Node 环境，import.meta.env 不可用，需用 loadEnv 读取 .env.*
-  const env = loadEnv(mode, process.cwd())
+/** host 已带端口时，换成前缀自己的端口。 */
+function replacePort(host: string, port: string): string {
+  const url = new URL(host)
+  url.port = port
+  return url.origin
+}
 
-  const host = env.VITE_APP_PROXY_TARGET || 'http://192.168.122.130'
-
-  // 解析多后端前缀条目（含可选端口）
-  const prefixEntries: { prefix: string; port: string }[] = []
-  if (env.VITE_APP_API_PREFIXES) {
-    for (const item of env.VITE_APP_API_PREFIXES.split(',')) {
-      const trimmed = item.trim()
-      if (!trimmed) continue
-      const [prefix, port = ''] = trimmed.split(':')
-      const normalized = prefix.startsWith('/') ? prefix.slice(1) : prefix
-      if (normalized) {
-        prefixEntries.push({ prefix: normalized, port: port.trim() })
-      }
-    }
-  }
-
-  return {
-    base:
-      env.VITE_QIANKUN_ENABLED === 'true' && command === 'serve'
-        ? '/'
-        : env.VITE_APP_SUBAPP_BASE || '/subapp/rhea/',
-    plugins: [
-      vue(),
-      // qiankun 子应用模式：仅 VITE_QIANKUN_ENABLED=true 时启用
-      // 参数是子应用名，必须与主应用注册时 AppName 保持一致
-      ...(env.VITE_QIANKUN_ENABLED === 'true' ? [qiankun('rhea', { useDevMode: true })] : []),
-      // codeInspectorPlugin只在开发环境
-      command === 'serve' ? codeInspectorPlugin({ bundler: 'vite' }) : null,
-      // 与 importStyle: 'sass' 对齐
-      ElementPlus({ useSource: true }),
-      AutoImport({
-        imports: ['vue', 'vue-router', 'pinia', '@vueuse/core'],
-        resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
-        dirs: ['src/composables'],
-        dts: 'src/auto-imports.d.ts',
-        eslintrc: { enabled: true },
-      }),
-      Components({
-        resolvers: [
-          ElementPlusResolver({ importStyle: 'sass' }),
-          YunElpResolver({ importStyle: 'scss', importElementStyle: 'sass' }),
-        ],
-        dirs: ['src/components'],
-        dts: 'src/components.d.ts',
-      }),
-      UnoCSS(),
-    ],
-    resolve: {
-      alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `
-          @use "element-plus/theme-chalk/src/mixins/config.scss" as element-config with ($namespace: "ep");
-          @use "yun-elp/theme-chalk/src/mixins/config.scss" as yun-config with ($namespace: "yp");
-        `,
-        },
-      },
-    },
-    build: {
-      rolldownOptions: {
-        checks: {
-          invalidAnnotation: false,
-          pluginTimings: false,
-        },
-        output: {
-          manualChunks(id) {
-            if (!id.includes('node_modules')) return
-
-            if (
-              id.includes('/vue/') ||
-              id.includes('/vue-router/') ||
-              id.includes('/pinia/') ||
-              id.includes('/@vueuse/')
-            )
-              return 'framework'
-
-            if (
-              id.includes('/element-plus/') ||
-              id.includes('/@element-plus/') ||
-              id.includes('/yun-elp/')
-            )
-              return 'ui'
-
-            if (id.includes('/axios/') || id.includes('/lodash-es/')) return 'utils'
-
-            return 'vendor'
-          },
-        },
-      },
-    },
-    server: {
-      port: Number(env.VITE_APP_FE_PORT) || 5173,
-      proxy: {
-        // 默认后端代理（/api 开头的请求）
-        '/api': {
-          target: host,
-          changeOrigin: true,
-        },
-        // 多后端前缀代理：/rhea_dev → host/rhea, /daas_dev → host/daas, ...
-        ...buildPrefixProxy(prefixEntries, host),
-        // qiankun dev 模式：将 /subapp/ 前缀的请求回源到自身根路径，
-        // 解决 vite-plugin-qiankun useDevMode 下 __INJECTED_PUBLIC_PATH_BY_QIANKUN__ + '..' 导致路径丢失问题
-        ...(env.VITE_QIANKUN_ENABLED === 'true' && command === 'serve'
-          ? {
-              '/subapp': {
-                target: `http://localhost:${Number(env.VITE_APP_FE_PORT) || 5173}`,
-                changeOrigin: true,
-                rewrite: (path: string) => {
-                  // /subapp/rhea 或 /subapp/rhea/ -> /（HTML entry，由 Vite 返回 index.html）
-                  if (
-                    path === '/subapp/rhea' ||
-                    path === (env.VITE_APP_SUBAPP_BASE || '/subapp/rhea/')
-                  )
-                    return '/'
-                  // /subapp/@vite/client -> /@vite/client 等模块资源
-                  return path.replace(/^\/subapp/, '')
-                },
-              },
-            }
-          : {}),
-      },
-    },
-  }
-})
+/** 按需样式在编译 SFC 时才插入，启动扫描看不到；提前列入，避免异步路由首次进入时补预构建并整页刷新。 */
+function elementPlusStyleDeps(): string[] {
+  const root = fileURLToPath(new URL('./node_modules/element-plus/es/components', import.meta.url))
+  if (!fs.existsSync(root)) return []
+  return fs
+    .readdirSync(root, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
+    .filter(entry => fs.existsSync(path.join(root, entry.name, 'style/index.mjs')))
+    .map(entry => `element-plus/es/components/${entry.name}/style/index`)
+}

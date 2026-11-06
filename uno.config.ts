@@ -1,4 +1,3 @@
-// @ts-expect-error build-time loader path from @iconify/utils
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 // import presetRemToPx from '@unocss/preset-rem-to-px'
 import {
@@ -22,15 +21,18 @@ export default defineConfig({
     // Support text-12 / text-14 style pixel font sizes alongside preset typography tokens.
     [/^text-(\d+)$/, ([, d]) => ({ 'font-size': `${Number(d)}px` })],
   ],
-  // theme: {
-  //   colors: {
-  //     primary: 'var(--el-color-primary)',
-  //     success: 'var(--el-color-success)',
-  //     warning: 'var(--el-color-warning)',
-  //     danger: 'var(--el-color-danger)',
-  //     info: 'var(--el-color-info)',
-  //   },
-  // },
+  theme: {
+    colors: {
+      primary: 'var(--ep-color-primary)',
+      success: 'var(--ep-color-success)',
+      warning: 'var(--ep-color-warning)',
+      danger: 'var(--ep-color-danger)',
+      info: 'var(--ep-color-info)',
+    },
+    borderRadius: {
+      DEFAULT: 'var(--ep-border-radius-base)',
+    },
+  },
   presets: [
     presetUno(),
     // presetRemToPx(),

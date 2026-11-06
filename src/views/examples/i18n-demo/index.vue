@@ -70,7 +70,7 @@
 import { ref } from 'vue'
 
 import { useLocale } from '@/composables/useLocale'
-import { t } from '@/languages'
+import { t } from '@/languages/t'
 
 const { activeLanguage, languages } = useLocale()
 

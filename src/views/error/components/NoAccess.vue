@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center">
-    <img src="@/assets/images/error/401.webp" alt="401">
+    <img src="@/assets/images/error/401.webp" alt="401" />
     <p class="mt-4 text-14 text-center" style="color: var(--ep-text-color-regular)">
       {{ t('没有访问权限') }}
     </p>
@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import { t } from '@/languages'
+import { t } from '@/languages/t'
 
 const router = useRouter()
 

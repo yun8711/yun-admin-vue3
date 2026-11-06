@@ -33,12 +33,7 @@
         <y-column-text prop="collectName" label="采集名称" min-width="180" link @click="toDetail" />
 
         <!-- ③ y-column-text：普通列 + formatter -->
-        <y-column-text
-          prop="collectCount"
-          label="采集数量"
-          align="right"
-          :formatter="formatCount"
-        />
+        <y-column-text prop="collectCount" label="采集数量" :formatter="formatCount" />
 
         <!-- ④ y-column-filter：状态列（彩色标签 + 表头筛选 + 状态圆点） -->
         <y-column-filter prop="status" label="状态" :config="statusConfig" />
@@ -47,7 +42,7 @@
         <y-column-filter
           prop="collectType"
           label="采集方式"
-          :no-status="true"
+          no-status
           :config="collectTypeConfig"
         />
 
@@ -55,8 +50,8 @@
         <y-column-filter
           prop="priority"
           label="优先级"
-          :no-status="true"
-          :no-filter="true"
+          no-status
+          no-filter
           :config="priorityConfig"
         />
 
@@ -80,13 +75,12 @@
 defineOptions({ name: 'SimpleListPage' })
 import { ElInput } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { ref, markRaw } from 'vue'
-import { useRouter } from 'vue-router'
-import type { ColumnOpItemType } from 'yun-elp'
+import type ColumnOpItemType from 'yun-elp'
 
 import { getList } from '@/api/example'
 import { useTable } from '@/composables/useTable'
-import LogDrawer from '@/views/examples/list/components/index.vue'
+
+import LogDrawer from './components/LogDrawer.vue'
 
 const router = useRouter()
 const yTableRef = ref()
@@ -208,7 +202,7 @@ const tableActions: ColumnOpItemType[] = [
     popProps: {
       popContent: '是否确认删除该数据？',
     },
-    confirm: _scope => {
+    confirm: () => {
       ElMessage('已删除')
     },
   },

@@ -1,12 +1,12 @@
 import { ElMessage } from 'element-plus'
 import type { RouteLocationNormalized, Router } from 'vue-router'
 
+import { usePageProgress } from '@/composables/usePageProgress'
 import { sendMessage } from '@/composables/useQiankunActions'
-import { APP_TITLE } from '@/config/menu'
 import { useGlobalStore } from '@/stores/global'
 import { usePermissionStore } from '@/stores/permission'
-import { done, remove, start } from '@/utils/nprogress'
 
+import { appConfig } from '../../vite.custom.ts'
 import { CATCH_ALL_NAME } from './constant-routes'
 import { addDynamicRoutes } from './index'
 
@@ -15,6 +15,8 @@ const WHITE_LIST = ['/404']
 
 /** 安装路由守卫。 */
 export function setupRouterGuard(router: Router): void {
+  const { start, done } = usePageProgress()
+
   router.beforeEach(async to => {
     const permissionStore = usePermissionStore()
     const globalStore = useGlobalStore()
@@ -38,10 +40,10 @@ export function setupRouterGuard(router: Router): void {
       }
 
       // 目标路由已存在 → 直接放行
-      if (!import.meta.env.DEV || routeExists(router, to.path)) {
+      if (!appConfig.isDev || routeExists(router, to.path)) {
         return true
       }
-      // dev 模式：目标路由不存在（HMR 新增模块）→ 继续走 regeneration
+      // 开发模式：目标路由不存在（HMR 新增模块）→ 继续走 regeneration
     }
 
     // 生成/再生动态路由
@@ -52,10 +54,8 @@ export function setupRouterGuard(router: Router): void {
       if (permissionStore.noRoutes) return { path: '/404', replace: true }
       return { ...to, replace: true }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('[router] generate routes failed:', error)
       ElMessage.error('路由初始化失败')
-      remove()
       return { path: '/404', replace: true }
     }
   })
@@ -66,7 +66,7 @@ export function setupRouterGuard(router: Router): void {
     handleBreadcrumb(to, globalStore)
     done()
 
-    const prefix = globalStore.tabPrefix || APP_TITLE
+    const prefix = globalStore.tabPrefix || appConfig.title
     const title = to.meta?.title
     document.title = title ? `${title} - ${prefix}` : prefix
   })

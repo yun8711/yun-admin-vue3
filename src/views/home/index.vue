@@ -57,7 +57,7 @@ const links = [
 
 .home-icon {
   margin-bottom: 24px;
-  color: var(--el-color-primary);
+  color: var(--ep-color-primary);
   opacity: 0.8;
 }
 
@@ -65,13 +65,13 @@ const links = [
   margin-bottom: 8px;
   font-size: 24px;
   font-weight: 600;
-  color: var(--el-text-color-primary);
+  color: var(--ep-text-color-primary);
 }
 
 .home-desc {
   margin-bottom: 32px;
   font-size: 14px;
-  color: var(--el-text-color-secondary);
+  color: var(--ep-text-color-secondary);
 }
 
 .home-links {

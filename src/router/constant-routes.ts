@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import BasicLayout from '@/layouts/BasicLayout.vue'
-import BlankLayout from '@/layouts/BlankLayout.vue'
+import BasicLayout from '@/layouts/BasicLayout/index.vue'
+import BlankLayout from '@/layouts/BlankLayout/index.vue'
 
 /** 初始兜底路由 name，动态路由生成后会被 finalRoute 替换 */
 export const CATCH_ALL_NAME = '__catch_all__'

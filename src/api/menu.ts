@@ -1,4 +1,4 @@
-import type { AuthMenu } from '@/router/types'
+import type { AuthMenu } from '@/types/router'
 import { request } from '@/utils'
 
 // 获取当前用户可访问的菜单/权限路由表（按 menuKey 与前端动态路由匹配）。

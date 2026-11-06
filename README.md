@@ -68,7 +68,7 @@ src/
   assets/       静态资源
   components/   通用组件
   composables/  组合式函数
-  layouts/      页面布局
+  layouts/      页面布局（每种布局一个目录，子组件在其 components/）
   router/       路由配置
   stores/       Pinia store
   styles/       全局样式

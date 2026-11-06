@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center">
-    <img src="@/assets/images/error/404.webp" alt="404">
+    <img src="@/assets/images/error/404.webp" alt="404" />
     <p class="mt-4 text-14 text-center" style="color: var(--ep-text-color-regular)">
       {{ t('抱歉，页面走丢了') }}
     </p>
@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import { t } from '@/languages'
+import { t } from '@/languages/t'
 
 const router = useRouter()
 

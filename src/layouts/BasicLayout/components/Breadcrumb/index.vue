@@ -47,20 +47,20 @@ const visible = computed<boolean>(
   line-height: 40px;
 
   .breadcrumb-label {
-    color: var(--el-text-color-secondary);
+    color: var(--ep-text-color-secondary);
   }
 
   .breadcrumb-link {
     cursor: pointer;
 
     &:hover {
-      color: var(--el-color-primary);
+      color: var(--ep-color-primary);
     }
   }
 
   .breadcrumb-current {
     cursor: text;
-    color: var(--el-text-color-secondary);
+    color: var(--ep-text-color-secondary);
   }
 }
 </style>

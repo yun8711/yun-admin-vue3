@@ -1,2 +1,6 @@
 @use './reset';
-@use './override'; // @use 'yun-elp/themes/kd.scss';
+
+// 本地测试：pnpm.overrides 为 link:../yun-elp/dist 时保持注释。
+// 这里 @use 会解析到组件库仓库里的 element-plus，主题变量变成 --el-*。
+// 去掉 overrides、改回 npm 上的 yun-elp 后启用下一行，并删除 main.ts 的 import 'yun-elp/themes/kd.scss'。
+// @use 'yun-elp/themes/kd.scss';

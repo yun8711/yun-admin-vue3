@@ -12,11 +12,13 @@
     -->
     <el-container class="body-container">
       <!-- 侧边栏：仅展示当前激活一级菜单的 children，visible 受 meta.sidebar 控制 -->
-      <Sidebar
+      <y-sidebar
         v-model:collapsed="sidebarCollapsed"
         v-model:visible="sidebarVisible"
         :menu-list="sidebarMenuList"
         :active-menu="activeMenu"
+        show-footer
+        @select="onSelect"
       />
 
       <!--
@@ -42,21 +44,22 @@
 <script setup lang="ts">
 import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 import { computed, provide, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { usePageScroll, PAGE_SCROLL_KEY } from '@/composables/usePageScroll'
 import { SIDEBAR_WIDTH_KEY } from '@/composables/useSidebarWidth'
-import AppBreadcrumb from '@/layouts/Breadcrumb/index.vue'
-import NavHead from '@/layouts/NavHead/index.vue'
-import Sidebar from '@/layouts/Sidebar/index.vue'
-import type { MenuNode } from '@/router/types'
 import { useGlobalStore } from '@/stores/global'
 import { usePermissionStore } from '@/stores/permission'
+import type { MenuNode } from '@/types/router'
+
+import AppBreadcrumb from './components/Breadcrumb/index.vue'
+import NavHead from './components/NavHead/index.vue'
 
 const inQiankun = qiankunWindow.__POWERED_BY_QIANKUN__
 const route = useRoute()
 const permissionStore = usePermissionStore()
 const globalStore = useGlobalStore()
+const router = useRouter()
 
 // 侧边栏折叠状态
 const sidebarCollapsed = ref(false)
@@ -93,6 +96,16 @@ const sidebarMenuList = computed<MenuNode[]>(() => {
   const active = topLevelMenus.value.find(m => m.path === activeTopLevel.value)
   return active?.children ?? []
 })
+
+/** 菜单选中回调 */
+function onSelect(index: string): void {
+  // 外部链接跳转
+  if (/^(https?:)?\/\//.test(index)) {
+    window.open(index, '_blank')
+    return
+  }
+  router.push(index)
+}
 
 // ========== 页面滚动 ==========
 
